@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "networkpackage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Tornike222/NetworkPackage",
+      "state" : {
+        "branch" : "V1.1.0",
+        "revision" : "2381315b67ab34b1eecc9b4fc3b8fcbcd8437d53"
+      }
+    }
+  ],
+  "version" : 2
+}
