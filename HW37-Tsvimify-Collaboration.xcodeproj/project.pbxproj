@@ -16,6 +16,7 @@
 		B209C6B62C18F059003C53D3 /* LocationAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6B52C18F059003C53D3 /* LocationAddViewModel.swift */; };
 		B209C6B92C18F25D003C53D3 /* LocationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6B82C18F25D003C53D3 /* LocationsModel.swift */; };
 		B209C6BE2C18F2D0003C53D3 /* NetworkPackage in Frameworks */ = {isa = PBXBuildFile; productRef = B209C6BD2C18F2D0003C53D3 /* NetworkPackage */; };
+		B209C6C12C19118C003C53D3 /* CurrentWeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6C02C19118C003C53D3 /* CurrentWeatherModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		B209C6B32C18F047003C53D3 /* LocationAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAddViewController.swift; sourceTree = "<group>"; };
 		B209C6B52C18F059003C53D3 /* LocationAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAddViewModel.swift; sourceTree = "<group>"; };
 		B209C6B82C18F25D003C53D3 /* LocationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsModel.swift; sourceTree = "<group>"; };
+		B209C6C02C19118C003C53D3 /* CurrentWeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		B209C6B72C18F0C9003C53D3 /* WeatherResponseModel */ = {
 			isa = PBXGroup;
 			children = (
+				B209C6C02C19118C003C53D3 /* CurrentWeatherModel.swift */,
 			);
 			path = WeatherResponseModel;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			files = (
 				B209C6A32C18E93A003C53D3 /* WeatherViewController.swift in Sources */,
 				B209C6B62C18F059003C53D3 /* LocationAddViewModel.swift in Sources */,
+				B209C6C12C19118C003C53D3 /* CurrentWeatherModel.swift in Sources */,
 				B209C6B92C18F25D003C53D3 /* LocationsModel.swift in Sources */,
 				B209C6B12C18ED27003C53D3 /* WeatherViewModel.swift in Sources */,
 				B209C6A12C18E93A003C53D3 /* HW37_Tsvimify_CollaborationApp.swift in Sources */,
