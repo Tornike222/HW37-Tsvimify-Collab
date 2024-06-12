@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AdaptiveImage: View {
     @Environment(\.colorScheme) var colorScheme
+    
     let light: Image
     let dark: Image
 

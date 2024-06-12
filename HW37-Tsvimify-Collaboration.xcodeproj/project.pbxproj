@@ -12,7 +12,6 @@
 		261469512C19323C00AE6315 /* CloudsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261469502C19323C00AE6315 /* CloudsAnimation.swift */; };
 		261469532C19331100AE6315 /* SnowFall.sks in Resources */ = {isa = PBXBuildFile; fileRef = 261469522C19331000AE6315 /* SnowFall.sks */; };
 		262148092C1918F20040E546 /* RainFall.sks in Resources */ = {isa = PBXBuildFile; fileRef = 262148072C1918F20040E546 /* RainFall.sks */; };
-		2621480A2C1918F20040E546 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 262148082C1918F20040E546 /* Assets.xcassets */; };
 		262148142C191EB10040E546 /* CloudsLarge.sks in Resources */ = {isa = PBXBuildFile; fileRef = 262148132C191EB10040E546 /* CloudsLarge.sks */; };
 		262148162C1924360040E546 /* CloudsMini.sks in Resources */ = {isa = PBXBuildFile; fileRef = 262148152C1924360040E546 /* CloudsMini.sks */; };
 		262148192C192B890040E546 /* AdaptiveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262148182C192B890040E546 /* AdaptiveImage.swift */; };
@@ -34,7 +33,6 @@
 		261469502C19323C00AE6315 /* CloudsAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudsAnimation.swift; sourceTree = "<group>"; };
 		261469522C19331000AE6315 /* SnowFall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SnowFall.sks; sourceTree = "<group>"; };
 		262148072C1918F20040E546 /* RainFall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = RainFall.sks; sourceTree = "<group>"; };
-		262148082C1918F20040E546 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		262148132C191EB10040E546 /* CloudsLarge.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CloudsLarge.sks; sourceTree = "<group>"; };
 		262148152C1924360040E546 /* CloudsMini.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CloudsMini.sks; sourceTree = "<group>"; };
 		262148182C192B890040E546 /* AdaptiveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveImage.swift; sourceTree = "<group>"; };
@@ -74,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				262148072C1918F20040E546 /* RainFall.sks */,
-				262148082C1918F20040E546 /* Assets.xcassets */,
 				262148132C191EB10040E546 /* CloudsLarge.sks */,
 				262148152C1924360040E546 /* CloudsMini.sks */,
 				261469522C19331000AE6315 /* SnowFall.sks */,
@@ -274,7 +271,6 @@
 				B209C6A82C18E93D003C53D3 /* Preview Assets.xcassets in Resources */,
 				262148092C1918F20040E546 /* RainFall.sks in Resources */,
 				262148142C191EB10040E546 /* CloudsLarge.sks in Resources */,
-				2621480A2C1918F20040E546 /* Assets.xcassets in Resources */,
 				262148162C1924360040E546 /* CloudsMini.sks in Resources */,
 				261469532C19331100AE6315 /* SnowFall.sks in Resources */,
 				B209C6A52C18E93D003C53D3 /* Assets.xcassets in Resources */,
