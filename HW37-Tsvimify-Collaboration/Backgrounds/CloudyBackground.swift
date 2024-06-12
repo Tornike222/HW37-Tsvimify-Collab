@@ -33,14 +33,3 @@ struct CloudyBackground: View {
         }
     }
 }
-
-struct CloudyBackground_Previews: PreviewProvider {
-    static var previews: some View {
-        CloudyBackground(
-            sksFileName: "StarsEmitter",
-            backgroundColorTop: .cloudyTop,
-            backgroundColorBottom: .cloudyBottom
-        )
-        .environment(\.colorScheme, .dark)
-    }
-}
