@@ -10,10 +10,9 @@ import SwiftData
 
 struct WeatherViewController: View {
     @StateObject var viewModel: WeatherViewModel
-    
-    @Environment(\.modelContext) private var context //arsheexot argchirdebat
-    @Query private var locationsModel: [LocationsModel] //arsheexot argchirdebat
-    @State var currentLocation: LocationsModel? //default mnishvneloba gichiravs tavidan aq da daapdatebulic aq gamogichndebat samomavlod
+    @Environment(\.modelContext) private var context
+    @Query private var locationsModel: [LocationsModel]
+    @State var currentLocation: LocationsModel?
     
     var body: some View {
         NavigationStack {
@@ -37,15 +36,11 @@ struct WeatherViewController: View {
                                 introStatsView(weatherResponse: weatherResponse)
                                     .frame(height: 37)
                             }
-                            
                         }
-                        
                         Spacer()
                     }
-                    
                 }
                 .ignoresSafeArea()
-            
         }
         .onAppear(perform: {
             if let tbilisiLocation = locationsModel.first(where: { $0.name == "Tbilisi" }) {
@@ -58,6 +53,7 @@ struct WeatherViewController: View {
             viewModel.fetchWeather(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
         })
     }
+    
     var citiesMenu: some View {
         Menu {
             ForEach(locationsModel) { location in
@@ -78,15 +74,17 @@ struct WeatherViewController: View {
                 Image("navigate")
             }
             
-            
         } label: {
             HStack(content: {
                 Spacer()
                 
                 Image("map")
+                
                 Spacer()
                     .frame(width: 12)
+                
                 shadowedWhiteTitle(title: "Tbilisi")
+                
                 Spacer()
                     .frame(width: 12)
                 
@@ -94,8 +92,6 @@ struct WeatherViewController: View {
                 
                 Spacer()
                     .frame(width: 35)
-                
-                
             })
         }
         .padding(.top, 60)
@@ -108,6 +104,7 @@ struct WeatherViewController: View {
             .foregroundStyle(.white)
             .shadow(radius: 10)
     }
+    
     func glassMorphic(height: CGFloat) -> some View {
         ZStack {
             TransparentBlurView(effect: .systemUltraThinMaterialLight) { view in
@@ -121,7 +118,7 @@ struct WeatherViewController: View {
     
     func introStatsView(weatherResponse: WeatherResponse) -> some View {
         HStack {
-            statChipView(iconName: "rain", value: "\(weatherResponse.main.humidity)%")
+            statChipView(iconName: "rainy", value: "\(weatherResponse.main.humidity)%")
             statChipView(iconName: "humidity", value: "\(weatherResponse.main.humidity)%")
             statChipView(iconName: "wind", value: "\(String(format: "%.1f", weatherResponse.wind.speed))m/s")
         }
@@ -149,6 +146,7 @@ struct WeatherViewController: View {
                 
                 Text("Max:")
                     .font(.subheadline)
+                
                 Text("\(String(format: "%.1f", weatherResponse.main.tempMax - 273.15))°")
                     .bold()
             }
@@ -177,15 +175,12 @@ struct WeatherViewController: View {
     }
 }
 
-
-
 struct TransparentBlurView: UIViewRepresentable {
     var effect: UIBlurEffect.Style
     var onChange: (UIVisualEffectView) -> ()
     
     func makeUIView(context: Context) -> UIVisualEffectView {
         UIVisualEffectView(effect: UIBlurEffect(style: effect))
-        
     }
     
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
