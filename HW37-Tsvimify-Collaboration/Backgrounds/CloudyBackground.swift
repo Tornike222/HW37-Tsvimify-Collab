@@ -70,7 +70,3 @@ struct CloudyBackground_Previews: PreviewProvider {
         .environment(\.colorScheme, .dark)
     }
 }
-
-private func gg() -> some View {
-    Text("jj")
-}
