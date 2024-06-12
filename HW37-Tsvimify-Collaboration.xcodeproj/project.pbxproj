@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2614694B2C19317200AE6315 /* RainyAndSnowyBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2614694A2C19317200AE6315 /* RainyAndSnowyBackground.swift */; };
+		2614694F2C19321500AE6315 /* RainAndSnowAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2614694E2C19321500AE6315 /* RainAndSnowAnimations.swift */; };
+		261469512C19323C00AE6315 /* CloudsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261469502C19323C00AE6315 /* CloudsAnimation.swift */; };
+		261469532C19331100AE6315 /* SnowFall.sks in Resources */ = {isa = PBXBuildFile; fileRef = 261469522C19331000AE6315 /* SnowFall.sks */; };
+		262148092C1918F20040E546 /* RainFall.sks in Resources */ = {isa = PBXBuildFile; fileRef = 262148072C1918F20040E546 /* RainFall.sks */; };
+		262148142C191EB10040E546 /* CloudsLarge.sks in Resources */ = {isa = PBXBuildFile; fileRef = 262148132C191EB10040E546 /* CloudsLarge.sks */; };
+		262148162C1924360040E546 /* CloudsMini.sks in Resources */ = {isa = PBXBuildFile; fileRef = 262148152C1924360040E546 /* CloudsMini.sks */; };
+		262148192C192B890040E546 /* AdaptiveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262148182C192B890040E546 /* AdaptiveImage.swift */; };
 		B209C6A12C18E93A003C53D3 /* HW37_Tsvimify_CollaborationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6A02C18E93A003C53D3 /* HW37_Tsvimify_CollaborationApp.swift */; };
 		B209C6A32C18E93A003C53D3 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6A22C18E93A003C53D3 /* WeatherViewController.swift */; };
 		B209C6A52C18E93D003C53D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B209C6A42C18E93D003C53D3 /* Assets.xcassets */; };
@@ -16,9 +24,18 @@
 		B209C6B62C18F059003C53D3 /* LocationAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6B52C18F059003C53D3 /* LocationAddViewModel.swift */; };
 		B209C6B92C18F25D003C53D3 /* LocationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6B82C18F25D003C53D3 /* LocationsModel.swift */; };
 		B209C6BE2C18F2D0003C53D3 /* NetworkPackage in Frameworks */ = {isa = PBXBuildFile; productRef = B209C6BD2C18F2D0003C53D3 /* NetworkPackage */; };
+		B209C6C12C19118C003C53D3 /* CurrentWeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6C02C19118C003C53D3 /* CurrentWeatherModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2614694A2C19317200AE6315 /* RainyAndSnowyBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainyAndSnowyBackground.swift; sourceTree = "<group>"; };
+		2614694E2C19321500AE6315 /* RainAndSnowAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainAndSnowAnimations.swift; sourceTree = "<group>"; };
+		261469502C19323C00AE6315 /* CloudsAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudsAnimation.swift; sourceTree = "<group>"; };
+		261469522C19331000AE6315 /* SnowFall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SnowFall.sks; sourceTree = "<group>"; };
+		262148072C1918F20040E546 /* RainFall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = RainFall.sks; sourceTree = "<group>"; };
+		262148132C191EB10040E546 /* CloudsLarge.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CloudsLarge.sks; sourceTree = "<group>"; };
+		262148152C1924360040E546 /* CloudsMini.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CloudsMini.sks; sourceTree = "<group>"; };
+		262148182C192B890040E546 /* AdaptiveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveImage.swift; sourceTree = "<group>"; };
 		B209C69D2C18E93A003C53D3 /* HW37-Tsvimify-Collaboration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HW37-Tsvimify-Collaboration.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B209C6A02C18E93A003C53D3 /* HW37_Tsvimify_CollaborationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HW37_Tsvimify_CollaborationApp.swift; sourceTree = "<group>"; };
 		B209C6A22C18E93A003C53D3 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
@@ -28,6 +45,7 @@
 		B209C6B32C18F047003C53D3 /* LocationAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAddViewController.swift; sourceTree = "<group>"; };
 		B209C6B52C18F059003C53D3 /* LocationAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAddViewModel.swift; sourceTree = "<group>"; };
 		B209C6B82C18F25D003C53D3 /* LocationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsModel.swift; sourceTree = "<group>"; };
+		B209C6C02C19118C003C53D3 /* CurrentWeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +60,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		261469492C19303600AE6315 /* Backgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				2614694A2C19317200AE6315 /* RainyAndSnowyBackground.swift */,
+			);
+			path = Backgrounds;
+			sourceTree = "<group>";
+		};
+		2614694C2C1931C200AE6315 /* ParticeFiles */ = {
+			isa = PBXGroup;
+			children = (
+				262148072C1918F20040E546 /* RainFall.sks */,
+				262148132C191EB10040E546 /* CloudsLarge.sks */,
+				262148152C1924360040E546 /* CloudsMini.sks */,
+				261469522C19331000AE6315 /* SnowFall.sks */,
+			);
+			path = ParticeFiles;
+			sourceTree = "<group>";
+		};
+		2614694D2C1931F200AE6315 /* SpriteClasses */ = {
+			isa = PBXGroup;
+			children = (
+				2614694E2C19321500AE6315 /* RainAndSnowAnimations.swift */,
+				261469502C19323C00AE6315 /* CloudsAnimation.swift */,
+			);
+			path = SpriteClasses;
+			sourceTree = "<group>";
+		};
+		262148062C1918BF0040E546 /* SpriteKitFiles */ = {
+			isa = PBXGroup;
+			children = (
+				2614694D2C1931F200AE6315 /* SpriteClasses */,
+				2614694C2C1931C200AE6315 /* ParticeFiles */,
+			);
+			path = SpriteKitFiles;
+			sourceTree = "<group>";
+		};
+		262148172C192B760040E546 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				262148182C192B890040E546 /* AdaptiveImage.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		B209C6942C18E93A003C53D3 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +125,9 @@
 			isa = PBXGroup;
 			children = (
 				B209C6A02C18E93A003C53D3 /* HW37_Tsvimify_CollaborationApp.swift */,
+				262148062C1918BF0040E546 /* SpriteKitFiles */,
+				262148172C192B760040E546 /* CustomViews */,
+				261469492C19303600AE6315 /* Backgrounds */,
 				B209C6BA2C18F26A003C53D3 /* Models */,
 				B209C6AE2C18ECDF003C53D3 /* Scenes */,
 				B209C6AF2C18ECF0003C53D3 /* Assets */,
@@ -107,6 +173,7 @@
 		B209C6B72C18F0C9003C53D3 /* WeatherResponseModel */ = {
 			isa = PBXGroup;
 			children = (
+				B209C6C02C19118C003C53D3 /* CurrentWeatherModel.swift */,
 			);
 			path = WeatherResponseModel;
 			sourceTree = "<group>";
@@ -202,6 +269,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B209C6A82C18E93D003C53D3 /* Preview Assets.xcassets in Resources */,
+				262148092C1918F20040E546 /* RainFall.sks in Resources */,
+				262148142C191EB10040E546 /* CloudsLarge.sks in Resources */,
+				262148162C1924360040E546 /* CloudsMini.sks in Resources */,
+				261469532C19331100AE6315 /* SnowFall.sks in Resources */,
 				B209C6A52C18E93D003C53D3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,12 +284,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2614694F2C19321500AE6315 /* RainAndSnowAnimations.swift in Sources */,
 				B209C6A32C18E93A003C53D3 /* WeatherViewController.swift in Sources */,
+				261469512C19323C00AE6315 /* CloudsAnimation.swift in Sources */,
 				B209C6B62C18F059003C53D3 /* LocationAddViewModel.swift in Sources */,
+				B209C6C12C19118C003C53D3 /* CurrentWeatherModel.swift in Sources */,
+				2614694B2C19317200AE6315 /* RainyAndSnowyBackground.swift in Sources */,
 				B209C6B92C18F25D003C53D3 /* LocationsModel.swift in Sources */,
 				B209C6B12C18ED27003C53D3 /* WeatherViewModel.swift in Sources */,
 				B209C6A12C18E93A003C53D3 /* HW37_Tsvimify_CollaborationApp.swift in Sources */,
 				B209C6B42C18F047003C53D3 /* LocationAddViewController.swift in Sources */,
+				262148192C192B890040E546 /* AdaptiveImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

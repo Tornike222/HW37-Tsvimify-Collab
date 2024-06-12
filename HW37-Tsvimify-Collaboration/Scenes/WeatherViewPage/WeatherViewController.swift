@@ -105,6 +105,3 @@ struct WeatherViewController: View {
             .shadow(radius: 10)
     }}
 //
-#Preview {
-    WeatherViewController(viewModel: WeatherViewModel())
-}
