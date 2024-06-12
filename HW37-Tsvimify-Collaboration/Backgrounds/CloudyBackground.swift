@@ -10,7 +10,6 @@ import SwiftUI
 
 struct CloudyBackground: View {
     @Environment(\.colorScheme) var colorScheme
-    let sksFileName: String
     let backgroundColorTop: Color
     let backgroundColorBottom: Color
     

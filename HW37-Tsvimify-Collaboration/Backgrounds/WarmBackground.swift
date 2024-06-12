@@ -12,18 +12,17 @@ struct WarmBackground: View {
     
     @Environment(\.colorScheme) var colorScheme
     @State private var animateBirds = false
-    let sksFileName: String
     let backgroundColorTop: Color
     let backgroundColorBottom: Color
     
     var body: some View {
         ZStack {
             if colorScheme == .light {
-                moonAndSunImages
+                MoonAndSunImages()
                     .overlay { animationViews }
             } else {
                 animationViews
-                    .overlay { moonAndSunImages }
+                    .overlay { MoonAndSunImages() }
             }
         }
         .background(
@@ -49,7 +48,7 @@ struct WarmBackground: View {
     }
     
     private var starsAnimation: some View {
-        SpriteView(scene: StarsAnimation(sksFileName: sksFileName), options: [.allowsTransparency])
+        SpriteView(scene: StarsAnimation(sksFileName: "StarsTwinkling.sks"), options: [.allowsTransparency])
             .ignoresSafeArea()
     }
     
@@ -67,27 +66,5 @@ struct WarmBackground: View {
             }
             
         }
-    }
-    
-    private var moonAndSunImages: some View {
-        VStack {
-            HStack {
-                AdaptiveImage(light: Image(.sun), dark: Image(.moon))
-                Spacer()
-            }
-            .padding(.leading, 13)
-            Spacer()
-        }
-    }
-}
-
-struct WarmBackground_Previews: PreviewProvider {
-    static var previews: some View {
-        WarmBackground(
-            sksFileName: "StarsEmitter",
-            backgroundColorTop: .sunnyTop,
-            backgroundColorBottom: .sunnyBottom
-        )
-        .environment(\.colorScheme, .light)
     }
 }
