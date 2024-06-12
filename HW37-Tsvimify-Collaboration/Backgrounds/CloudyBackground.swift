@@ -18,7 +18,7 @@ struct CloudyBackground: View {
         ZStack {
             animationViews
                 .overlay {
-                    moonAndSunImages
+                    MoonAndSunImages()
                 }
         }
         .background(
@@ -27,35 +27,9 @@ struct CloudyBackground: View {
     
     private var animationViews: some View {
         Group {
-            cloudsLargeAnimation
-            
-            cloudsMiniAnimation
-            
-            cloudsLargeAnimation
-            
-        }
-    }
-    
-    private var cloudsLargeAnimation: some View {
-        SpriteView(scene: CloudsAnimation(anchorPointX: -1, anchorPointY: 0, sksFileName: "CloudsLarge.sks",particleColor: colorScheme == .light ? .white: .gray),options: [.allowsTransparency])
-            .ignoresSafeArea()
-    }
-    
-    private var cloudsMiniAnimation: some View {
-        SpriteView(scene: CloudsAnimation(anchorPointX: -1, anchorPointY: 0, sksFileName: "CloudsMini.sks",particleColor: colorScheme == .light ? .white: .gray),options: [.allowsTransparency])
-            .ignoresSafeArea()
-    }
-    
-    private var moonAndSunImages: some View {
-        VStack {
-            HStack {
-                AdaptiveImage(light: Image(.sun), dark: Image(.moon))
-                
-                Spacer()
-            }
-            .padding(.leading, 13)
-            
-            Spacer()
+            CloudAnimationView(sksFileName: "CloudsLarge.sks")
+            CloudAnimationView(sksFileName: "CloudsMini.sks")
+            CloudAnimationView(sksFileName: "CloudsLarge.sks")
         }
     }
 }

@@ -16,6 +16,8 @@
 		262148162C1924360040E546 /* CloudsMini.sks in Resources */ = {isa = PBXBuildFile; fileRef = 262148152C1924360040E546 /* CloudsMini.sks */; };
 		262148192C192B890040E546 /* AdaptiveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262148182C192B890040E546 /* AdaptiveImage.swift */; };
 		8C4DCBF42C19ABB900E2916D /* CloudyBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4DCBF32C19ABB800E2916D /* CloudyBackground.swift */; };
+		8C4DCBF82C19E39D00E2916D /* MoonAndSunImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4DCBF72C19E39D00E2916D /* MoonAndSunImages.swift */; };
+		8C4DCBFA2C19E59000E2916D /* CloudsAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4DCBF92C19E59000E2916D /* CloudsAnimationView.swift */; };
 		8CACFDA92C198CE6000FD45C /* StarsTwinkling.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8CACFDA72C198CE6000FD45C /* StarsTwinkling.sks */; };
 		8CACFDAC2C1992B9000FD45C /* StarsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CACFDAB2C1992B9000FD45C /* StarsAnimation.swift */; };
 		8CACFDAE2C199895000FD45C /* WarmBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CACFDAD2C199895000FD45C /* WarmBackground.swift */; };
@@ -41,6 +43,8 @@
 		262148152C1924360040E546 /* CloudsMini.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CloudsMini.sks; sourceTree = "<group>"; };
 		262148182C192B890040E546 /* AdaptiveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveImage.swift; sourceTree = "<group>"; };
 		8C4DCBF32C19ABB800E2916D /* CloudyBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudyBackground.swift; sourceTree = "<group>"; };
+		8C4DCBF72C19E39D00E2916D /* MoonAndSunImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonAndSunImages.swift; sourceTree = "<group>"; };
+		8C4DCBF92C19E59000E2916D /* CloudsAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudsAnimationView.swift; sourceTree = "<group>"; };
 		8CACFDA72C198CE6000FD45C /* StarsTwinkling.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StarsTwinkling.sks; sourceTree = "<group>"; };
 		8CACFDAB2C1992B9000FD45C /* StarsAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsAnimation.swift; sourceTree = "<group>"; };
 		8CACFDAD2C199895000FD45C /* WarmBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmBackground.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				262148182C192B890040E546 /* AdaptiveImage.swift */,
+				8C4DCBF72C19E39D00E2916D /* MoonAndSunImages.swift */,
+				8C4DCBF92C19E59000E2916D /* CloudsAnimationView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -300,11 +306,13 @@
 				2614694F2C19321500AE6315 /* RainAndSnowAnimations.swift in Sources */,
 				B209C6A32C18E93A003C53D3 /* WeatherViewController.swift in Sources */,
 				8CACFDAE2C199895000FD45C /* WarmBackground.swift in Sources */,
+				8C4DCBF82C19E39D00E2916D /* MoonAndSunImages.swift in Sources */,
 				261469512C19323C00AE6315 /* CloudsAnimation.swift in Sources */,
 				B209C6B62C18F059003C53D3 /* LocationAddViewModel.swift in Sources */,
 				8CACFDAC2C1992B9000FD45C /* StarsAnimation.swift in Sources */,
 				8C4DCBF42C19ABB900E2916D /* CloudyBackground.swift in Sources */,
 				B209C6C12C19118C003C53D3 /* CurrentWeatherModel.swift in Sources */,
+				8C4DCBFA2C19E59000E2916D /* CloudsAnimationView.swift in Sources */,
 				2614694B2C19317200AE6315 /* RainyAndSnowyBackground.swift in Sources */,
 				B209C6B92C18F25D003C53D3 /* LocationsModel.swift in Sources */,
 				B209C6B12C18ED27003C53D3 /* WeatherViewModel.swift in Sources */,
