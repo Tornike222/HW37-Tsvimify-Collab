@@ -21,6 +21,7 @@
 		8CACFDA92C198CE6000FD45C /* StarsTwinkling.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8CACFDA72C198CE6000FD45C /* StarsTwinkling.sks */; };
 		8CACFDAC2C1992B9000FD45C /* StarsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CACFDAB2C1992B9000FD45C /* StarsAnimation.swift */; };
 		8CACFDAE2C199895000FD45C /* WarmBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CACFDAD2C199895000FD45C /* WarmBackground.swift */; };
+		8CF6D5B72C1AC89F00BCB918 /* WeekForecastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF6D5B62C1AC89F00BCB918 /* WeekForecastModel.swift */; };
 		B209C6A12C18E93A003C53D3 /* HW37_Tsvimify_CollaborationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6A02C18E93A003C53D3 /* HW37_Tsvimify_CollaborationApp.swift */; };
 		B209C6A32C18E93A003C53D3 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209C6A22C18E93A003C53D3 /* WeatherViewController.swift */; };
 		B209C6A52C18E93D003C53D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B209C6A42C18E93D003C53D3 /* Assets.xcassets */; };
@@ -48,6 +49,7 @@
 		8CACFDA72C198CE6000FD45C /* StarsTwinkling.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StarsTwinkling.sks; sourceTree = "<group>"; };
 		8CACFDAB2C1992B9000FD45C /* StarsAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsAnimation.swift; sourceTree = "<group>"; };
 		8CACFDAD2C199895000FD45C /* WarmBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmBackground.swift; sourceTree = "<group>"; };
+		8CF6D5B62C1AC89F00BCB918 /* WeekForecastModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekForecastModel.swift; sourceTree = "<group>"; };
 		B209C69D2C18E93A003C53D3 /* HW37-Tsvimify-Collaboration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HW37-Tsvimify-Collaboration.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B209C6A02C18E93A003C53D3 /* HW37_Tsvimify_CollaborationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HW37_Tsvimify_CollaborationApp.swift; sourceTree = "<group>"; };
 		B209C6A22C18E93A003C53D3 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				B209C6C02C19118C003C53D3 /* CurrentWeatherModel.swift */,
+				8CF6D5B62C1AC89F00BCB918 /* WeekForecastModel.swift */,
 			);
 			path = WeatherResponseModel;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				8CACFDAC2C1992B9000FD45C /* StarsAnimation.swift in Sources */,
 				8C4DCBF42C19ABB900E2916D /* CloudyBackground.swift in Sources */,
 				B209C6C12C19118C003C53D3 /* CurrentWeatherModel.swift in Sources */,
+				8CF6D5B72C1AC89F00BCB918 /* WeekForecastModel.swift in Sources */,
 				8C4DCBFA2C19E59000E2916D /* CloudsAnimationView.swift in Sources */,
 				2614694B2C19317200AE6315 /* RainyAndSnowyBackground.swift in Sources */,
 				B209C6B92C18F25D003C53D3 /* LocationsModel.swift in Sources */,
