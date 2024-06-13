@@ -316,7 +316,7 @@ struct WeatherViewController: View {
                     Text(Double(day.dt).dayOfWeek())
                         .font(.headline)
                         .foregroundColor(.white)
-                        .frame(width: 92)
+                        .frame(width: 94, alignment: .leading)
                     
                     weatherIcon(image: day.weather.first?.icon)
                         .padding(.leading, 28)
