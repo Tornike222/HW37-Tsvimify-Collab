@@ -18,10 +18,10 @@ struct WeatherViewController: View {
         NavigationStack {
             Color.blue
                 .overlay {
+                    VStack {
+                    citiesMenu
                     ScrollView {
                         VStack {
-                            citiesMenu
-                            
                             if let weatherResponse = viewModel.weatherResponse {
                                 ZStack {
                                     glassMorphic(height: 137)
@@ -30,7 +30,7 @@ struct WeatherViewController: View {
                                         .frame(height: 135)
                                         .padding()
                                 }
-                                
+            
                                 ZStack {
                                     glassMorphic(height: 37)
                                     
@@ -45,6 +45,7 @@ struct WeatherViewController: View {
                                 }
                                 .padding(.top, 20)
                             }
+                        }
                             Spacer()
                         }
                     }
