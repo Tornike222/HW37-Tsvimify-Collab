@@ -17,46 +17,48 @@ struct WeatherViewController: View {
     
     var body: some View {
         NavigationStack {
-            Color.blue
-                .overlay {
                     VStack {
-                    citiesMenu
-                    ScrollView {
-                        VStack {
-                            if let weatherResponse = viewModel.weatherResponse {
-                                ZStack {
-                                    glassMorphic(width: 342, height: 137)
+                        citiesMenu
+                        ScrollView {
+                            VStack {
+                                if let weatherResponse = viewModel.weatherResponse {
+                                    ZStack {
+                                        glassMorphic(width: 342, height: 137)
+                                        
+                                        weatherInfoView(weatherResponse: weatherResponse)
+                                            .frame(height: 135)
+                                            .padding()
+                                    }
                                     
-                                    weatherInfoView(weatherResponse: weatherResponse)
-                                        .frame(height: 135)
-                                        .padding()
-                                }
-            
-                                ZStack {
-                                    glassMorphic(width: 342, height: 37)
+                                    ZStack {
+                                        glassMorphic(width: 342, height: 37)
+                                        
+                                        introStatsView(weatherResponse: weatherResponse)
+                                            .frame(height: 37)
+                                    }
                                     
-                                    introStatsView(weatherResponse: weatherResponse)
-                                        .frame(height: 37)
+                                    todaysCard
+                                    
+                                    ZStack {
+                                        glassMorphic(width: 342, height: 380)
+                                        
+                                        weekForecastView
+                                    }
+                                    .padding(.top, 20)
                                 }
                                 
-                                ZStack {
-                                    glassMorphic(width: 342, height: 380)
-                                    
-                                    weekForecastView
-                                }
-                                .padding(.top, 20)
                             }
-                        }
                             Spacer()
                         }
+                        .scrollIndicators(.hidden)
+
                     }
+                    .ignoresSafeArea()
+                    .background (
+                        chooseBackground()
+                    )
                 }
-                .ignoresSafeArea()
-        }
         .onAppear(perform: {
-            //            for i in locationsModel {
-            //                context.delete(i)
-            //            }
             
             if let tbilisiLocation = locationsModel.first(where: { $0.name == "Tbilisi" }) {
                 currentLocation = tbilisiLocation
@@ -67,6 +69,7 @@ struct WeatherViewController: View {
             }
             viewModel.fetchWeather(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
             viewModel.fetchWeekForecast(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
+            viewModel.fetchHourlyWeather(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
         })
     }
     
@@ -76,6 +79,7 @@ struct WeatherViewController: View {
                 Button(location.name, action: {
                     viewModel.fetchWeather(lat: location.latitude, lon: location.latitude)
                     viewModel.fetchWeekForecast(lat: location.latitude, lon: location.latitude)
+                    viewModel.fetchHourlyWeather(lat: location.latitude, lon: location.latitude)
                     currentLocation = location
                 })
             }
@@ -94,40 +98,40 @@ struct WeatherViewController: View {
             HStack{
                 Spacer()
                 glassMorphic(width: titleWidth + 125, height: 36)
-                                    .background(GeometryReader { geometry in
-                                        Color.clear.onAppear {
-                                            titleWidth = geometry.size.width
-                                        }
-                                    })
-                                    .offset(x: 20)
+                    .background(GeometryReader { geometry in
+                        Color.clear.onAppear {
+                            titleWidth = geometry.size.width
+                        }
+                    })
+                    .offset(x: 20)
             }
-
-                        .overlay {
-                            HStack{
-                                Spacer()
-                                
-                                Image("map")
-                                
-                                Spacer()
-                                    .frame(width: 12)
-                                
-                                shadowWhiteTitle(title: currentLocation?.name ?? "")
-                                    .background() {
-                                        GeometryReader { geometry in
-                                            Path { _ in
-                                                titleWidth = geometry.size.width
-                                            }
-                                        }
-                                    }
-                                Spacer()
-                                    .frame(width: 12)
-                                
-                                Image("vector")
-                                
-                                Spacer()
-                                    .frame(width: 35)
+            
+            .overlay {
+                HStack{
+                    Spacer()
+                    
+                    Image("map")
+                    
+                    Spacer()
+                        .frame(width: 12)
+                    
+                    shadowWhiteTitle(title: currentLocation?.name ?? "")
+                        .background() {
+                            GeometryReader { geometry in
+                                Path { _ in
+                                    titleWidth = geometry.size.width
+                                }
                             }
                         }
+                    Spacer()
+                        .frame(width: 12)
+                    
+                    Image("vector")
+                    
+                    Spacer()
+                        .frame(width: 35)
+                }
+            }
         }
         .ignoresSafeArea(.all)
     }
@@ -209,23 +213,117 @@ struct WeatherViewController: View {
         .cornerRadius(20)
     }
     
+    private var todaysCard: some View {
+        glassMorphic(width: 342, height: 217)
+            .overlay {
+                todaysCardContent
+            }
+            .padding(.top, 22)
+    }
+    
+    private var todaysCardContent: some View {
+        VStack(alignment: .leading) {
+            if viewModel.filterTodaysWeather?.count ?? 0 >= 4 {
+                cardsTitleAndDateView
+                    .padding(.top, 12)
+                    .padding(.horizontal, 18)
+                scrollableListOfWeather
+            } else {
+                cardsTitleAndDateView
+                    .padding(.top, 50)
+                    .padding(.horizontal, 18)
+                nonScrollableListOfWeather
+            }
+        }
+    }
+    
+    private var cardsTitleAndDateView: some View {
+        HStack {
+            Text("Today")
+                .font(.system(size: 20))
+                .foregroundStyle(Color.white)
+                .bold()
+            
+            Spacer()
+            
+            Text((viewModel.hourlyWeatherResponse?.hourly[0].dt.getDateStringFromUTC() ?? ""))
+                .font(.system(size: 18,weight: .regular))
+                .foregroundStyle(Color.white)
+        }
+    }
+    
+    private var scrollableListOfWeather: some View {
+        ScrollView(.horizontal) {
+            LazyHStack(content: {
+                ForEach(viewModel.filterTodaysWeather ?? []) { hourlyForecast in
+                    if  hourlyForecast.id == viewModel.filterTodaysWeather?[0].id {
+                         glassMorphic(width: 70, height: 155)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(lineWidth: 1)
+                                    .foregroundStyle(Color.white)
+                                TodaysRow(hourlyForecast: hourlyForecast)
+                            }
+                    } else {
+                        TodaysRow(hourlyForecast: hourlyForecast)
+                    }
+                }
+            })
+        }
+        .padding(.leading, 13)
+        .padding(.bottom, 13)
+        .scrollIndicators(.hidden)
+    }
+    
+    private var nonScrollableListOfWeather : some View {
+        HStack {
+            ForEach(viewModel.filterTodaysWeather ?? []) { hourlyForecast in
+                if hourlyForecast.id == viewModel.filterTodaysWeather?[0].id {
+                     glassMorphic(width: 70, height: 155)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(lineWidth: 1)
+                            TodaysRow(hourlyForecast: hourlyForecast)
+                        }
+                } else {
+                    TodaysRow(hourlyForecast: hourlyForecast)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func chooseBackground() -> some View {
+        switch viewModel.weatherResponse?.weather[0].main {
+        case "Rain":
+            RainyAndSnowyBackground(sksFileName: "RainFall.sks", backgroundColorTop: .rainyTop, backgroundColorBottom: .rainyBottom)
+        case "Snow":
+            RainyAndSnowyBackground(sksFileName: "SnowFall.sks", backgroundColorTop: .snowyTop, backgroundColorBottom: .snowyBottom)
+        case "Clear":
+            WarmBackground(backgroundColorTop: .sunnyTop, backgroundColorBottom: .sunnyBottom)
+        case "Clouds":
+            CloudyBackground(backgroundColorTop: .cloudyTop, backgroundColorBottom: .cloudyBottom)
+        default :
+            EmptyView()
+        }
+    }
+    
     // MARK: - Weekly weather forecast
     var weekForecastView: some View {
         VStack(spacing: 0) {
             ForEach(viewModel.sortedWeekData(), id: \.dt) { day in
                 HStack {
-                    Text(viewModel.dayOfWeek(from: day.dt))
+                    Text(Double(day.dt).dayOfWeek())
                         .font(.headline)
                         .foregroundColor(.white)
-                    
-                    Spacer()
+                        .frame(width: 92)
                     
                     weatherIcon(image: day.weather.first?.icon)
+                        .padding(.leading, 28)
                     
                     Spacer()
                     
                     dayAndNightTemp(tempAtDay: day.temp.day, tempAtNight: day.temp.night)
-                    
                 }
                 .padding(.horizontal)
                 .frame(height: 46)

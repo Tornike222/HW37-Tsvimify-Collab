@@ -43,25 +43,14 @@ struct RainyAndSnowyBackground: View {
     }
 
     private var cloudsLargeAnimation: some View {
-        SpriteView(scene: CloudsAnimation(anchorPointX: -1, anchorPointY: 0, sksFileName: "CloudsLarge.sks",particleColor: colorScheme == .light ? .white: .gray),options: [.allowsTransparency])
-            .ignoresSafeArea()
+        CloudAnimationView(sksFileName: "CloudsLarge.sks")
     }
     
     private var cloudsMiniAnimation: some View {
-        SpriteView(scene: CloudsAnimation(anchorPointX: -1, anchorPointY: 0, sksFileName: "CloudsMini.sks",particleColor: colorScheme == .light ? .white: .gray),options: [.allowsTransparency])
-            .ignoresSafeArea()
+        CloudAnimationView(sksFileName: "CloudsMini.sks")
     }
     
     private var moonAndSunImages: some View {
-        VStack {
-            HStack {
-                AdaptiveImage(light: Image(.sun), dark: Image(.moon))
-                
-                Spacer()
-            }
-            .padding(.leading, 13)
-            
-            Spacer()
-        }
+        MoonAndSunImages()
     }
 }

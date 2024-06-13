@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct WeatherResponse: Decodable {
     let weather: [Weather]
     let main: Main

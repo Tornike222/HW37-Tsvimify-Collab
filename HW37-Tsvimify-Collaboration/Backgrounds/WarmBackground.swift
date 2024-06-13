@@ -64,7 +64,6 @@ struct WarmBackground: View {
                         .animation(Animation.linear(duration: 4).repeatForever(autoreverses: false).delay(delays[index]), value: animateBirds)
                 }
             }
-            
         }
     }
 }
