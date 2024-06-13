@@ -12,10 +12,10 @@ import NetworkPackage
 class WeatherViewModel: ObservableObject {
     @Published var locationResponseModel: LocationsModel?
     @Published var weatherResponse: WeatherResponse?
-    @Published var hourlyWeatherResponse: HourlyWeatherResponse?
     @Published var errorMessage: String?
     @Published var weekForecastResponse: WeekForecastResponse?
-    
+    @Published var hourlyWeatherResponse: HourlyWeatherResponse?
+
     // MARK: Computed Property
        var filterTodaysWeather: [HourlyForecast]? {
            guard let hourlyWeather = hourlyWeatherResponse else {
@@ -27,8 +27,7 @@ class WeatherViewModel: ObservableObject {
                return nil
            }
        }
-    
-    //MARK: Fetch Datas
+
     func fetchWeather(lat: Double, lon: Double) {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=159e264bbb707514e8ea1734c14e4169"
         
@@ -46,10 +45,8 @@ class WeatherViewModel: ObservableObject {
         }
     }
     
-    func fetchHourlyWeather(lat: Double, lon: Double) {
     func fetchWeekForecast(lat: Double, lon: Double) {
         let urlString = "https://openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&units=metric&appid=439d4b804bc8187953eb36d2a8c26a02"
-        NetworkService().requestData(urlString: urlString) { (response: HourlyWeatherResponse?, error: Error?) in
         
         NetworkService().requestData(urlString: urlString) { (response: WeekForecastResponse?, error: Error?) in
             if let error = error {
@@ -58,14 +55,29 @@ class WeatherViewModel: ObservableObject {
             }
             
             if let response = response {
-                self.hourlyWeatherResponse = response
                 self.weekForecastResponse = response
             } else {
-                self.errorMessage = "Failed to load weather data."
                 self.errorMessage = "Failed to load forecast data."
             }
         }
     }
+    
+    func fetchHourlyWeather(lat: Double, lon: Double) {
+        let urlString = "https://openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&units=metric&appid=439d4b804bc8187953eb36d2a8c26a02"
+        NetworkService().requestData(urlString: urlString) { (response: HourlyWeatherResponse?, error: Error?) in
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+                return
+            }
+            
+            if let response = response {
+                self.hourlyWeatherResponse = response
+            } else {
+                self.errorMessage = "Failed to load weather data."
+            }
+        }
+    }
+
     
     func dayOfWeek(from timestamp: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(timestamp))

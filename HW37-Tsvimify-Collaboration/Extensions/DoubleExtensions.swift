@@ -22,7 +22,7 @@ extension Double {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US")
         dateFormatter.dateStyle = .medium
-        let monthAndDate = dateFormatter.string(from: date).prefix(5)
+        let monthAndDate = dateFormatter.string(from: date).prefix(6)
         return String(monthAndDate)
     }
 }
