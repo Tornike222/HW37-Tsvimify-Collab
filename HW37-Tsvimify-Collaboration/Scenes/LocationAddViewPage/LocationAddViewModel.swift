@@ -9,11 +9,13 @@ import Foundation
 import NetworkPackage
 
 class LocationAddViewModel: ObservableObject {
+    //MARK: - Published vars
     @Published var locationResponse: [LocationsModel]?
     @Published var weatherResponse: [WeatherResponse]?
     @Published var locations: [LocationsModel]?
     @Published var searchText = ""
     
+    //MARK: - Functions
     func fetchLocations() {
         let urlString = "https://api.api-ninjas.com/v1/city?name=\(searchText)&limit=3"
         
@@ -41,8 +43,5 @@ class LocationAddViewModel: ObservableObject {
             }
             
         }
-            
-        
-
     }
 }
