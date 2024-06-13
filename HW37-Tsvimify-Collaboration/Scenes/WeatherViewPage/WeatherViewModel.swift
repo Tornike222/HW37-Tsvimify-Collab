@@ -13,7 +13,7 @@ class WeatherViewModel: ObservableObject {
     @Published var locationResponseModel: LocationsModel?
     @Published var weatherResponse: WeatherResponse?
     @Published var errorMessage: String?
-
+    @Published var weekForecastResponse: WeekForecastResponse?
     
     func fetchWeather(lat: Double, lon: Double) {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=159e264bbb707514e8ea1734c14e4169"
@@ -66,5 +66,3 @@ class WeatherViewModel: ObservableObject {
         return sortedData
     }
 }
-
-
