@@ -35,6 +35,9 @@ struct WarmBackground: View {
         .onAppear {
             animateBirds = true
         }
+        .onChange(of: colorScheme) {
+            animateBirds.toggle()
+        }
     }
     
     private var animationViews: some View {
@@ -57,14 +60,13 @@ struct WarmBackground: View {
         return GeometryReader { geometry in
             ZStack {
                 ForEach(0..<3) { index in
-                    Image("bird")
+                    Image("fish")
                         .resizable()
                         .frame(width: 30, height: 30)
                         .offset(x: animateBirds ? -geometry.size.width : geometry.size.width, y: CGFloat.random(in: -50...50))
                         .animation(Animation.linear(duration: 4).repeatForever(autoreverses: false).delay(delays[index]), value: animateBirds)
                 }
             }
-            
         }
     }
 }

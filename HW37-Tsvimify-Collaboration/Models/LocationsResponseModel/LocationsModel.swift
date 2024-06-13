@@ -9,10 +9,12 @@ import Foundation
 import SwiftData
 
 @Model
-class LocationsModel: Decodable {
+class LocationsModel: Decodable, Identifiable {
     var name: String
     var latitude: Double
     var longitude: Double
+    var weatherCelsiusDegree: Double?
+    var weatherName: String?
     
     init(name: String, latitude: Double, longitude: Double) {
         self.name = name

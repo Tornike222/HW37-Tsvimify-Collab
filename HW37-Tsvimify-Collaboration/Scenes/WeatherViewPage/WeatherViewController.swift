@@ -13,36 +13,53 @@ struct WeatherViewController: View {
     @Environment(\.modelContext) private var context
     @Query private var locationsModel: [LocationsModel]
     @State var currentLocation: LocationsModel?
+    @State private var titleWidth: CGFloat = 0
     
     var body: some View {
         NavigationStack {
-            Color.blue
-                .overlay {
                     VStack {
                         citiesMenu
-                        
-                        if let weatherResponse = viewModel.weatherResponse {
-                            ZStack {
-                                glassMorphic(height: 137)
+                        ScrollView {
+                            VStack {
+                                if let weatherResponse = viewModel.weatherResponse {
+                                    ZStack {
+                                        glassMorphic(width: 342, height: 137)
+                                        
+                                        weatherInfoView(weatherResponse: weatherResponse)
+                                            .frame(height: 135)
+                                            .padding()
+                                    }
+                                    
+                                    ZStack {
+                                        glassMorphic(width: 342, height: 37)
+                                        
+                                        introStatsView(weatherResponse: weatherResponse)
+                                            .frame(height: 37)
+                                    }
+                                    
+                                    todaysCard
+                                    
+                                    ZStack {
+                                        glassMorphic(width: 342, height: 380)
+                                        
+                                        weekForecastView
+                                    }
+                                    .padding(.top, 20)
+                                }
                                 
-                                weatherInfoView(weatherResponse: weatherResponse)
-                                    .frame(height: 135)
-                                    .padding()
                             }
-                            
-                            ZStack {
-                                glassMorphic(height: 37)
-                                
-                                introStatsView(weatherResponse: weatherResponse)
-                                    .frame(height: 37)
-                            }
+                            Spacer()
                         }
-                        Spacer()
+                        .scrollIndicators(.hidden)
+
                     }
+                    .ignoresSafeArea()
+                    .background (
+                        chooseBackground()
+                    )
                 }
-                .ignoresSafeArea()
-        }
         .onAppear(perform: {
+            
             if let tbilisiLocation = locationsModel.first(where: { $0.name == "Tbilisi" }) {
                 currentLocation = tbilisiLocation
             } else {
@@ -51,6 +68,8 @@ struct WeatherViewController: View {
                 currentLocation = newTbilisi
             }
             viewModel.fetchWeather(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
+            viewModel.fetchWeekForecast(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
+            viewModel.fetchHourlyWeather(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
         })
     }
     
@@ -58,14 +77,15 @@ struct WeatherViewController: View {
         Menu {
             ForEach(locationsModel) { location in
                 Button(location.name, action: {
-                    currentLocation?.name = location.name
-                    currentLocation?.longitude = location.longitude
-                    currentLocation?.latitude = location.latitude
+                    viewModel.fetchWeather(lat: location.latitude, lon: location.latitude)
+                    viewModel.fetchWeekForecast(lat: location.latitude, lon: location.latitude)
+                    viewModel.fetchHourlyWeather(lat: location.latitude, lon: location.latitude)
+                    currentLocation = location
                 })
             }
             
             NavigationLink {
-                LocationAddViewController(viewModel: LocationAddViewModel())
+                LocationAddViewController(locationViewModel: LocationAddViewModel())
                     .navigationBarTitle("Locations" , displayMode: .inline)
                 
             } label: {
@@ -75,44 +95,62 @@ struct WeatherViewController: View {
             }
             
         } label: {
-            HStack(content: {
+            HStack{
                 Spacer()
-                
-                Image("map")
-                
-                Spacer()
-                    .frame(width: 12)
-                
-                shadowedWhiteTitle(title: "Tbilisi")
-                
-                Spacer()
-                    .frame(width: 12)
-                
-                Image("vector")
-                
-                Spacer()
-                    .frame(width: 35)
-            })
+                glassMorphic(width: titleWidth + 125, height: 36)
+                    .background(GeometryReader { geometry in
+                        Color.clear.onAppear {
+                            titleWidth = geometry.size.width
+                        }
+                    })
+                    .offset(x: 20)
+            }
+            
+            .overlay {
+                HStack{
+                    Spacer()
+                    
+                    Image("map")
+                    
+                    Spacer()
+                        .frame(width: 12)
+                    
+                    shadowWhiteTitle(title: currentLocation?.name ?? "")
+                        .background() {
+                            GeometryReader { geometry in
+                                Path { _ in
+                                    titleWidth = geometry.size.width
+                                }
+                            }
+                        }
+                    Spacer()
+                        .frame(width: 12)
+                    
+                    Image("vector")
+                    
+                    Spacer()
+                        .frame(width: 35)
+                }
+            }
         }
-        .padding(.top, 60)
-
+        .ignoresSafeArea(.all)
     }
     
-    private func shadowedWhiteTitle(title: String) -> some View {
+    private func shadowWhiteTitle(title: String) -> some View {
         Text(title)
             .font(.title2)
             .foregroundStyle(.white)
             .shadow(radius: 10)
     }
     
-    func glassMorphic(height: CGFloat) -> some View {
+    func glassMorphic(width: CGFloat ,height: CGFloat) -> some View {
         ZStack {
             TransparentBlurView(effect: .systemUltraThinMaterialLight) { view in
                 
             }
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
-        .frame(width: 342, height: height)
+        .frame(width: width, height: height)
         .opacity(0.8)
     }
     
@@ -138,8 +176,9 @@ struct WeatherViewController: View {
             
             HStack(spacing: 3) {
                 Text("Min:")
-                    
+                
                     .font(.subheadline)
+                
                 Text("\(String(format: "%.1f", weatherResponse.main.tempMin - 273.15))°")
                     .bold()
                     .padding(.trailing)
@@ -155,13 +194,13 @@ struct WeatherViewController: View {
         .foregroundStyle(.white)
     }
     
-    func  statChipView(iconName: String, value: String) -> some View {
+    func statChipView(iconName: String, value: String) -> some View {
         HStack {
             Image(iconName)
                 .resizable()
                 .frame(width: 24, height: 24)
                 .font(.system(size: 24))
-           
+            
             Text(value)
                 .bold()
                 .font(.title3)
@@ -172,6 +211,163 @@ struct WeatherViewController: View {
         .foregroundStyle(.white)
         .padding()
         .cornerRadius(20)
+    }
+    
+    private var todaysCard: some View {
+        glassMorphic(width: 342, height: 217)
+            .overlay {
+                todaysCardContent
+            }
+            .padding(.top, 22)
+    }
+    
+    private var todaysCardContent: some View {
+        VStack(alignment: .leading) {
+            if viewModel.filterTodaysWeather?.count ?? 0 >= 4 {
+                cardsTitleAndDateView
+                    .padding(.top, 12)
+                    .padding(.horizontal, 18)
+                scrollableListOfWeather
+            } else {
+                cardsTitleAndDateView
+                    .padding(.top, 50)
+                    .padding(.horizontal, 18)
+                nonScrollableListOfWeather
+            }
+        }
+    }
+    
+    private var cardsTitleAndDateView: some View {
+        HStack {
+            Text("Today")
+                .font(.system(size: 20))
+                .foregroundStyle(Color.white)
+                .bold()
+            
+            Spacer()
+            
+            Text((viewModel.hourlyWeatherResponse?.hourly[0].dt.getDateStringFromUTC() ?? ""))
+                .font(.system(size: 18,weight: .regular))
+                .foregroundStyle(Color.white)
+        }
+    }
+    
+    private var scrollableListOfWeather: some View {
+        ScrollView(.horizontal) {
+            LazyHStack(content: {
+                ForEach(viewModel.filterTodaysWeather ?? []) { hourlyForecast in
+                    if  hourlyForecast.id == viewModel.filterTodaysWeather?[0].id {
+                         glassMorphic(width: 70, height: 155)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(lineWidth: 1)
+                                    .foregroundStyle(Color.white)
+                                TodaysRow(hourlyForecast: hourlyForecast)
+                            }
+                    } else {
+                        TodaysRow(hourlyForecast: hourlyForecast)
+                    }
+                }
+            })
+        }
+        .padding(.leading, 13)
+        .padding(.bottom, 13)
+        .scrollIndicators(.hidden)
+    }
+    
+    private var nonScrollableListOfWeather : some View {
+        HStack {
+            ForEach(viewModel.filterTodaysWeather ?? []) { hourlyForecast in
+                if hourlyForecast.id == viewModel.filterTodaysWeather?[0].id {
+                     glassMorphic(width: 70, height: 155)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(lineWidth: 1)
+                            TodaysRow(hourlyForecast: hourlyForecast)
+                        }
+                } else {
+                    TodaysRow(hourlyForecast: hourlyForecast)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func chooseBackground() -> some View {
+        switch viewModel.weatherResponse?.weather[0].main {
+        case "Rain":
+            RainyAndSnowyBackground(sksFileName: "RainFall.sks", backgroundColorTop: .rainyTop, backgroundColorBottom: .rainyBottom)
+        case "Snow":
+            RainyAndSnowyBackground(sksFileName: "SnowFall.sks", backgroundColorTop: .snowyTop, backgroundColorBottom: .snowyBottom)
+        case "Clear":
+            WarmBackground(backgroundColorTop: .sunnyTop, backgroundColorBottom: .sunnyBottom)
+        case "Clouds":
+            CloudyBackground(backgroundColorTop: .cloudyTop, backgroundColorBottom: .cloudyBottom)
+        default :
+            EmptyView()
+        }
+    }
+    
+    // MARK: - Weekly weather forecast
+    var weekForecastView: some View {
+        VStack(spacing: 0) {
+            ForEach(viewModel.sortedWeekData(), id: \.dt) { day in
+                HStack {
+                    Text(Double(day.dt).dayOfWeek())
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(width: 94, alignment: .leading)
+                    
+                    weatherIcon(image: day.weather.first?.icon)
+                        .padding(.leading, 28)
+                    
+                    Spacer()
+                    
+                    dayAndNightTemp(tempAtDay: day.temp.day, tempAtNight: day.temp.night)
+                }
+                .padding(.horizontal)
+                .frame(height: 46)
+                .cornerRadius(20)
+            }
+        }
+        .padding(.horizontal, 30)
+        .padding(.vertical, 16)
+        .frame(height: 350)
+    }
+    
+    private func dayAndNightTemp(tempAtDay: Double, tempAtNight: Double) -> some View {
+        HStack {
+            ShowTemperature(temp: tempAtDay)
+                .foregroundColor(.white)
+            
+            ShowTemperature(temp: tempAtNight)
+                .foregroundColor(.white).opacity(0.5)
+        }
+        .baselineOffset(8)
+        .font(.system(size: 18))
+    }
+    
+    @ViewBuilder
+    private func weatherIcon(image: String?) -> some View {
+        if let iconName = image {
+            AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(iconName)@2x.png")) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+            } placeholder: {
+                ProgressView()
+            }
+            .foregroundColor(.white)
+        }
+    }
+    
+    private func ShowTemperature(temp: Double) -> some View {
+        HStack(alignment: .top) {
+            Text("\(Int(temp))")
+            Image("celsius")
+                .padding(EdgeInsets(.init(top: 3, leading: -4, bottom: 0, trailing: 0)))
+        }
     }
 }
 
