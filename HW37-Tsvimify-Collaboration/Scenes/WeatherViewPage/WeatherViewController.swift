@@ -50,6 +50,8 @@ struct WeatherViewController: View {
                             }
                             Spacer()
                         }
+                        .scrollIndicators(.hidden)
+
                     }
                     .ignoresSafeArea()
                     .background (
@@ -220,14 +222,16 @@ struct WeatherViewController: View {
     }
     
     private var todaysCardContent: some View {
-        VStack {
-            cardsTitleAndDateView
-                .padding(.top, 12)
-                .padding(.horizontal, 18)
-            
+        VStack(alignment: .leading) {
             if viewModel.filterTodaysWeather?.count ?? 0 >= 4 {
+                cardsTitleAndDateView
+                    .padding(.top, 12)
+                    .padding(.horizontal, 18)
                 scrollableListOfWeather
             } else {
+                cardsTitleAndDateView
+                    .padding(.top, 50)
+                    .padding(.horizontal, 18)
                 nonScrollableListOfWeather
             }
         }
@@ -252,15 +256,38 @@ struct WeatherViewController: View {
         ScrollView(.horizontal) {
             LazyHStack(content: {
                 ForEach(viewModel.filterTodaysWeather ?? []) { hourlyForecast in
-                    TodaysRow(hourlyForecast: hourlyForecast)
+                    if  hourlyForecast.id == viewModel.filterTodaysWeather?[0].id {
+                         glassMorphic(width: 70, height: 155)
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(lineWidth: 1)
+                                TodaysRow(hourlyForecast: hourlyForecast)
+                            }
+                    } else {
+                        TodaysRow(hourlyForecast: hourlyForecast)
+                    }
                 }
             })
         }
+        .padding(.leading, 13)
+        .padding(.bottom, 13)
+        .scrollIndicators(.hidden)
     }
     
     private var nonScrollableListOfWeather : some View {
-        ForEach(viewModel.filterTodaysWeather ?? []) { hourlyForecast in
-            TodaysRow(hourlyForecast: hourlyForecast)
+        HStack {
+            ForEach(viewModel.filterTodaysWeather ?? []) { hourlyForecast in
+                if hourlyForecast.id == viewModel.filterTodaysWeather?[0].id {
+                     glassMorphic(width: 70, height: 155)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(lineWidth: 1)
+                            TodaysRow(hourlyForecast: hourlyForecast)
+                        }
+                } else {
+                    TodaysRow(hourlyForecast: hourlyForecast)
+                }
+            }
         }
     }
     
@@ -285,18 +312,17 @@ struct WeatherViewController: View {
         VStack(spacing: 0) {
             ForEach(viewModel.sortedWeekData(), id: \.dt) { day in
                 HStack {
-                    Text(viewModel.dayOfWeek(from: day.dt))
+                    Text(Double(day.dt).dayOfWeek())
                         .font(.headline)
                         .foregroundColor(.white)
-                    
-                    Spacer()
+                        .frame(width: 92)
                     
                     weatherIcon(image: day.weather.first?.icon)
+                        .padding(.leading, 28)
                     
                     Spacer()
                     
                     dayAndNightTemp(tempAtDay: day.temp.day, tempAtNight: day.temp.night)
-                    
                 }
                 .padding(.horizontal)
                 .frame(height: 46)

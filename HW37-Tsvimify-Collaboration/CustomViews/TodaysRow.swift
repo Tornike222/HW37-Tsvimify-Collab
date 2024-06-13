@@ -12,29 +12,26 @@ struct TodaysRow: View {
     
     var body: some View {
         VStack {
-            Text(String(Int(hourlyForecast.temp)) + "°C")
-                .font(.system(size: 18,weight: .regular))
-                .foregroundStyle(Color.white)
-                .shadow(
-                       color: Color.primary.opacity(1),
-                       radius: 10,
-                       x: -2,
-                       y: 3
-                   )
+            configureHourlyForecastText(with: String(Int(hourlyForecast.temp)) + "°C")
             
             WeatherImageView(url:  URL(string: "https://openweathermap.org/img/wn/\(hourlyForecast.weather[0].icon)@2x.png")!, imageSize: 43)
-       
-            Text(hourlyForecast.dt.getTimeStringFromUTC())
-                .font(.system(size: 18,weight: .regular))
-                .foregroundStyle(Color.white)
-                .shadow(
-                       color: Color.primary.opacity(1),
-                       radius: 10,
-                       x: -2,
-                       y: 3
-                   )
+            
+            configureHourlyForecastText(with: hourlyForecast.dt.getTimeStringFromUTC()
+            )
         }
         .frame(width: 70, height: 155)
-        .padding(.bottom, 50)
+    }
+    
+    private func configureHourlyForecastText(with text: String) -> some View {
+        Text(text)
+            .font(.system(size: 18,weight: .regular))
+            .foregroundStyle(Color.white)
+            .shadow(
+                color: Color.primary.opacity(1),
+                radius: 10,
+                x: -2,
+                y: 3
+            )
     }
 }
+

@@ -21,7 +21,7 @@ class WeatherViewModel: ObservableObject {
            guard let hourlyWeather = hourlyWeatherResponse else {
                return nil
            }
-           if let index = hourlyWeather.hourly.firstIndex(where: { $0.dt.getTimeStringFromUTC() == "00:00" }) {
+           if let index = hourlyWeather.hourly.firstIndex(where: { $0.dt.getTimeStringFromUTC() == "23:00" }) {
                return Array(hourlyWeather.hourly.prefix(through: index))
            } else {
                return nil
@@ -79,12 +79,12 @@ class WeatherViewModel: ObservableObject {
     }
 
     
-    func dayOfWeek(from timestamp: Int) -> String {
-        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        return dateFormatter.string(from: date)
-    }
+//    func dayOfWeek(from timestamp: Int) -> String {
+//        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "EEEE"
+//        return dateFormatter.string(from: date)
+//    }
     
     func sortedWeekData() -> [DailyWeather] {
         guard let data = weekForecastResponse?.daily else { return [] }
