@@ -261,6 +261,7 @@ struct WeatherViewController: View {
                             .overlay {
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(lineWidth: 1)
+                                    .foregroundStyle(Color.white)
                                 TodaysRow(hourlyForecast: hourlyForecast)
                             }
                     } else {
