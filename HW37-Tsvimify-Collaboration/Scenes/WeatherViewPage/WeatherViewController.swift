@@ -174,7 +174,7 @@ struct WeatherViewController: View {
             
             Text("\(String(format: "%.1f", weatherResponse.main.temp - 273.15))°")
                 .font(.system(size: 60))
-                .frame(width: 150, height: 76)
+                .frame(width: 200, height: 76)
                 .bold()
             
             Text(weatherResponse.weather.first?.description.capitalized ?? "N/A")
