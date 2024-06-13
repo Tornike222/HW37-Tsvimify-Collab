@@ -34,7 +34,6 @@ struct WeatherViewController: View {
                                         glassMorphic(width: 342, height: 37)
                                         
                                         introStatsView(weatherResponse: weatherResponse)
-                                            .frame(height: 37)
                                     }
                                     
                                     todaysCard
@@ -156,9 +155,17 @@ struct WeatherViewController: View {
     
     func introStatsView(weatherResponse: WeatherResponse) -> some View {
         HStack {
-            statChipView(iconName: "rainy", value: "\(weatherResponse.main.humidity)%")
-            statChipView(iconName: "humidity", value: "\(weatherResponse.main.humidity)%")
-            statChipView(iconName: "wind", value: "\(String(format: "%.1f", weatherResponse.wind.speed))m/s")
+            statChipView(iconName: "rainy", value: "\(Int(viewModel.weekForecastResponse?.daily.first?.rain?.rainPercentage ?? 0 ) * 100 > 100 ? 100 : Int(viewModel.weekForecastResponse?.daily.first?.rain?.rainPercentage ?? 0))%    ")
+            
+            Spacer()
+                .frame(width: 35)
+            
+            statChipView(iconName: "humidity", value: "\(weatherResponse.main.humidity)%   ")
+            
+            Spacer()
+                .frame(width: 35)
+            
+            statChipView(iconName: "wind", value: "\(String(format: "%.1f", weatherResponse.wind.speed))km/h")
         }
     }
     
@@ -195,22 +202,19 @@ struct WeatherViewController: View {
     }
     
     func statChipView(iconName: String, value: String) -> some View {
-        HStack {
+        HStack(alignment: .center, spacing: 1) {
             Image(iconName)
                 .resizable()
                 .frame(width: 24, height: 24)
-                .font(.system(size: 24))
             
             Text(value)
                 .bold()
-                .font(.title3)
                 .minimumScaleFactor(0.4)
                 .lineLimit(1)
-                .frame(width: 30, height: 30)
+                .frame(width: 50, height: 35)
         }
         .foregroundStyle(.white)
-        .padding()
-        .cornerRadius(20)
+        
     }
     
     private var todaysCard: some View {
