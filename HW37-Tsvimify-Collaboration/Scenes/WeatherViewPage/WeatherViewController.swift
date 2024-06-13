@@ -19,25 +19,35 @@ struct WeatherViewController: View {
             Color.blue
                 .overlay {
                     VStack {
-                        citiesMenu
-                        
-                        if let weatherResponse = viewModel.weatherResponse {
-                            ZStack {
-                                glassMorphic(height: 137)
+                    citiesMenu
+                    ScrollView {
+                        VStack {
+                            if let weatherResponse = viewModel.weatherResponse {
+                                ZStack {
+                                    glassMorphic(height: 137)
+                                    
+                                    weatherInfoView(weatherResponse: weatherResponse)
+                                        .frame(height: 135)
+                                        .padding()
+                                }
+            
+                                ZStack {
+                                    glassMorphic(height: 37)
+                                    
+                                    introStatsView(weatherResponse: weatherResponse)
+                                        .frame(height: 37)
+                                }
                                 
-                                weatherInfoView(weatherResponse: weatherResponse)
-                                    .frame(height: 135)
-                                    .padding()
-                            }
-                            
-                            ZStack {
-                                glassMorphic(height: 37)
-                                
-                                introStatsView(weatherResponse: weatherResponse)
-                                    .frame(height: 37)
+                                ZStack {
+                                    glassMorphic(height: 380)
+                                    
+                                    weekForecastView
+                                }
+                                .padding(.top, 20)
                             }
                         }
-                        Spacer()
+                            Spacer()
+                        }
                     }
                 }
                 .ignoresSafeArea()
@@ -51,6 +61,7 @@ struct WeatherViewController: View {
                 currentLocation = newTbilisi
             }
             viewModel.fetchWeather(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
+            viewModel.fetchWeekForecast(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
         })
     }
     
@@ -95,7 +106,7 @@ struct WeatherViewController: View {
             })
         }
         .padding(.top, 60)
-
+        
     }
     
     private func shadowedWhiteTitle(title: String) -> some View {
@@ -138,7 +149,7 @@ struct WeatherViewController: View {
             
             HStack(spacing: 3) {
                 Text("Min:")
-                    
+                
                     .font(.subheadline)
                 Text("\(String(format: "%.1f", weatherResponse.main.tempMin - 273.15))°")
                     .bold()
@@ -161,7 +172,7 @@ struct WeatherViewController: View {
                 .resizable()
                 .frame(width: 24, height: 24)
                 .font(.system(size: 24))
-           
+            
             Text(value)
                 .bold()
                 .font(.title3)
@@ -172,6 +183,69 @@ struct WeatherViewController: View {
         .foregroundStyle(.white)
         .padding()
         .cornerRadius(20)
+    }
+    
+    // MARK: - Weekly weather forecast
+    var weekForecastView: some View {
+        VStack(spacing: 0) {
+            ForEach(viewModel.sortedWeekData(), id: \.dt) { day in
+                HStack {
+                    Text(viewModel.dayOfWeek(from: day.dt))
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                    
+                    weatherIcon(image: day.weather.first?.icon)
+                    
+                    Spacer()
+                    
+                    dayAndNightTemp(tempAtDay: day.temp.day, tempAtNight: day.temp.day)
+                    
+                }
+                .padding(.horizontal)
+                .frame(height: 46)
+                .cornerRadius(20)
+            }
+        }
+        .padding(.horizontal, 30)
+        .padding(.vertical, 16)
+        .frame(height: 350)
+    }
+    
+    private func dayAndNightTemp(tempAtDay: Double, tempAtNight: Double) -> some View {
+        HStack {
+            ShowTemperature(temp: tempAtDay)
+                .foregroundColor(.white)
+            
+            ShowTemperature(temp: tempAtNight)
+                .foregroundColor(.white).opacity(0.5)
+        }
+        .baselineOffset(8)
+        .font(.system(size: 18))
+    }
+    
+    @ViewBuilder
+    private func weatherIcon(image: String?) -> some View {
+        if let iconName = image {
+            AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(iconName)@2x.png")) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+            } placeholder: {
+                ProgressView()
+            }
+            .foregroundColor(.white)
+        }
+    }
+    
+    private func ShowTemperature(temp: Double) -> some View {
+        HStack(alignment: .top) {
+            Text("\(Int(temp))")
+            Image("celsius")
+                .padding(EdgeInsets(.init(top: 3, leading: -4, bottom: 0, trailing: 0)))
+        }
     }
 }
 
