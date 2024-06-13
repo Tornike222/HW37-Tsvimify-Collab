@@ -8,11 +8,11 @@
 import Foundation
 import NetworkPackage
 
-
 class LocationAddViewModel: ObservableObject {
     @Published var locationResponse: [LocationsModel]?
-
-    @Published var searchText = "Tbilisi"
+    @Published var weatherResponse: [WeatherResponse]?
+    @Published var locations: [LocationsModel]?
+    @Published var searchText = ""
     
     func fetchLocations() {
         let urlString = "https://api.api-ninjas.com/v1/city?name=\(searchText)&limit=3"
@@ -26,6 +26,23 @@ class LocationAddViewModel: ObservableObject {
             }
         }
     }
-
     
+    func fetchWeather(locations: [LocationsModel]) {
+        for index in 0..<locations.count{
+            let location = locations[index]
+            let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(location.latitude)&lon=\(location.longitude)&appid=159e264bbb707514e8ea1734c14e4169"
+            
+            NetworkService().requestData(urlString: urlString) { (result: WeatherResponse?, error: Error?) in
+
+                if let result = result {
+                    self.locations?[index].weatherName = result.weather.first?.main
+                    self.locations?[index].weatherCelsiusDegree = result.main.temp
+                }
+            }
+            
+        }
+            
+        
+
+    }
 }

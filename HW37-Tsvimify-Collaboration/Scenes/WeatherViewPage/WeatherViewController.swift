@@ -13,6 +13,7 @@ struct WeatherViewController: View {
     @Environment(\.modelContext) private var context
     @Query private var locationsModel: [LocationsModel]
     @State var currentLocation: LocationsModel?
+    @State private var titleWidth: CGFloat = 0
     
     var body: some View {
         NavigationStack {
@@ -23,7 +24,7 @@ struct WeatherViewController: View {
                         
                         if let weatherResponse = viewModel.weatherResponse {
                             ZStack {
-                                glassMorphic(height: 137)
+                                glassMorphic(width: 342,height: 137)
                                 
                                 weatherInfoView(weatherResponse: weatherResponse)
                                     .frame(height: 135)
@@ -31,7 +32,7 @@ struct WeatherViewController: View {
                             }
                             
                             ZStack {
-                                glassMorphic(height: 37)
+                                glassMorphic(width: 342, height: 37)
                                 
                                 introStatsView(weatherResponse: weatherResponse)
                                     .frame(height: 37)
@@ -43,6 +44,10 @@ struct WeatherViewController: View {
                 .ignoresSafeArea()
         }
         .onAppear(perform: {
+            //            for i in locationsModel {
+            //                context.delete(i)
+            //            }
+            
             if let tbilisiLocation = locationsModel.first(where: { $0.name == "Tbilisi" }) {
                 currentLocation = tbilisiLocation
             } else {
@@ -58,14 +63,13 @@ struct WeatherViewController: View {
         Menu {
             ForEach(locationsModel) { location in
                 Button(location.name, action: {
-                    currentLocation?.name = location.name
-                    currentLocation?.longitude = location.longitude
-                    currentLocation?.latitude = location.latitude
+                    viewModel.fetchWeather(lat: location.latitude, lon: location.longitude)
+                    currentLocation = location
                 })
             }
             
             NavigationLink {
-                LocationAddViewController(viewModel: LocationAddViewModel())
+                LocationAddViewController(locationViewModel: LocationAddViewModel())
                     .navigationBarTitle("Locations" , displayMode: .inline)
                 
             } label: {
@@ -76,43 +80,57 @@ struct WeatherViewController: View {
             
         } label: {
             HStack(content: {
-                Spacer()
+                HStack{
+                    Spacer()
+                    
+                    Image("map")
+                    
+                    Spacer()
+                        .frame(width: 12)
+                    
+                    shadowWhiteTitle(title: currentLocation?.name ?? "")
+                        .background() {
+                            GeometryReader { geometry in
+                                Path { path in
+                                    titleWidth = geometry.size.width
+                                }
+                            }
+                        }
+                    Spacer()
+                        .frame(width: 12)
+                    
+                    Image("vector")
+                    
+                    Spacer()
+                        .frame(width: 35)
+                }
+                .overlay {
+                    glassMorphic(width: 300, height: 36)
+                        .padding(.leading, -titleWidth*2 + 475)
+                }
                 
-                Image("map")
-                
-                Spacer()
-                    .frame(width: 12)
-                
-                shadowedWhiteTitle(title: "Tbilisi")
-                
-                Spacer()
-                    .frame(width: 12)
-                
-                Image("vector")
-                
-                Spacer()
-                    .frame(width: 35)
             })
         }
         .padding(.top, 60)
-
+        .ignoresSafeArea(.all)
+        
     }
     
-    private func shadowedWhiteTitle(title: String) -> some View {
+    private func shadowWhiteTitle(title: String) -> some View {
         Text(title)
             .font(.title2)
             .foregroundStyle(.white)
             .shadow(radius: 10)
     }
     
-    func glassMorphic(height: CGFloat) -> some View {
+    func glassMorphic(width: CGFloat ,height: CGFloat) -> some View {
         ZStack {
             TransparentBlurView(effect: .systemUltraThinMaterialLight) { view in
                 
             }
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
-        .frame(width: 342, height: height)
+        .frame(width: width, height: height)
         .opacity(0.8)
     }
     
@@ -138,8 +156,8 @@ struct WeatherViewController: View {
             
             HStack(spacing: 3) {
                 Text("Min:")
-                    
                     .font(.subheadline)
+                
                 Text("\(String(format: "%.1f", weatherResponse.main.tempMin - 273.15))°")
                     .bold()
                     .padding(.trailing)
@@ -155,13 +173,13 @@ struct WeatherViewController: View {
         .foregroundStyle(.white)
     }
     
-    func  statChipView(iconName: String, value: String) -> some View {
+    func statChipView(iconName: String, value: String) -> some View {
         HStack {
             Image(iconName)
                 .resizable()
                 .frame(width: 24, height: 24)
                 .font(.system(size: 24))
-           
+            
             Text(value)
                 .bold()
                 .font(.title3)
