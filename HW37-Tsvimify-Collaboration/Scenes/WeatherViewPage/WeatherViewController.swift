@@ -25,7 +25,7 @@ struct WeatherViewController: View {
                         VStack {
                             if let weatherResponse = viewModel.weatherResponse {
                                 ZStack {
-                                    glassMorphic(height: 137)
+                                    glassMorphic(width: 342, height: 137)
                                     
                                     weatherInfoView(weatherResponse: weatherResponse)
                                         .frame(height: 135)
@@ -33,14 +33,14 @@ struct WeatherViewController: View {
                                 }
             
                                 ZStack {
-                                    glassMorphic(height: 37)
+                                    glassMorphic(width: 342, height: 37)
                                     
                                     introStatsView(weatherResponse: weatherResponse)
                                         .frame(height: 37)
                                 }
                                 
                                 ZStack {
-                                    glassMorphic(height: 380)
+                                    glassMorphic(width: 342, height: 380)
                                     
                                     weekForecastView
                                 }
@@ -74,7 +74,8 @@ struct WeatherViewController: View {
         Menu {
             ForEach(locationsModel) { location in
                 Button(location.name, action: {
-                    viewModel.fetchWeather(lat: location.latitude, lon: location.longitude)
+                    viewModel.fetchWeather(lat: location.latitude, lon: location.latitude)
+                    viewModel.fetchWeekForecast(lat: location.latitude, lon: location.latitude)
                     currentLocation = location
                 })
             }
@@ -90,41 +91,45 @@ struct WeatherViewController: View {
             }
             
         } label: {
-            HStack(content: {
-                HStack{
-                    Spacer()
-                    
-                    Image("map")
-                    
-                    Spacer()
-                        .frame(width: 12)
-                    
-                    shadowWhiteTitle(title: currentLocation?.name ?? "")
-                        .background() {
-                            GeometryReader { geometry in
-                                Path { path in
-                                    titleWidth = geometry.size.width
-                                }
+            HStack{
+                Spacer()
+                glassMorphic(width: titleWidth + 125, height: 36)
+                                    .background(GeometryReader { geometry in
+                                        Color.clear.onAppear {
+                                            titleWidth = geometry.size.width
+                                        }
+                                    })
+                                    .offset(x: 20)
+            }
+
+                        .overlay {
+                            HStack{
+                                Spacer()
+                                
+                                Image("map")
+                                
+                                Spacer()
+                                    .frame(width: 12)
+                                
+                                shadowWhiteTitle(title: currentLocation?.name ?? "")
+                                    .background() {
+                                        GeometryReader { geometry in
+                                            Path { _ in
+                                                titleWidth = geometry.size.width
+                                            }
+                                        }
+                                    }
+                                Spacer()
+                                    .frame(width: 12)
+                                
+                                Image("vector")
+                                
+                                Spacer()
+                                    .frame(width: 35)
                             }
                         }
-                    Spacer()
-                        .frame(width: 12)
-                    
-                    Image("vector")
-                    
-                    Spacer()
-                        .frame(width: 35)
-                }
-                .overlay {
-                    glassMorphic(width: 300, height: 36)
-                        .padding(.leading, -titleWidth*2 + 475)
-                }
-                
-            })
         }
-        .padding(.top, 60)
         .ignoresSafeArea(.all)
-        
     }
     
     private func shadowWhiteTitle(title: String) -> some View {
@@ -219,7 +224,7 @@ struct WeatherViewController: View {
                     
                     Spacer()
                     
-                    dayAndNightTemp(tempAtDay: day.temp.day, tempAtNight: day.temp.day)
+                    dayAndNightTemp(tempAtDay: day.temp.day, tempAtNight: day.temp.night)
                     
                 }
                 .padding(.horizontal)
