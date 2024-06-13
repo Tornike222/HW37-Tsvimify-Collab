@@ -20,6 +20,7 @@ struct WeatherResponse: Decodable {
 struct Weather: Decodable {
     let main: String
     let description: String
+    let icon: String
 }
 
 struct Main: Decodable {
