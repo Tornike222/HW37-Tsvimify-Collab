@@ -8,8 +8,10 @@
 import SpriteKit
 
 class StarsAnimation: SKScene {
+    //MARK: - Properties
     let sksFileName: String
     
+    //MARK: - Initialization
     init(sksFileName: String) {
         self.sksFileName = sksFileName
         super.init(size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -19,6 +21,7 @@ class StarsAnimation: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Lifecycle
     override func sceneDidLoad() {
         size = UIScreen.main.bounds.size
         scaleMode = .resizeFill

@@ -7,7 +7,9 @@
 
 import Foundation
 
+//MARK: - Double's Extension
 extension Double {
+    //MARK: - Formatter Functions
     func getTimeStringFromUTC() -> String {
         let date = Date(timeIntervalSince1970: self)
         

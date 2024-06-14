@@ -1,5 +1,5 @@
 //
-//  AdaptiveImage.swift
+//  AdaptiveImageView.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by Temur Chitashvili on 12.06.24.
@@ -7,13 +7,16 @@
 
 import SwiftUI
 
-struct AdaptiveImage: View {
+struct AdaptiveImageView: View {
+    //MARK: - Properties
     @Environment(\.colorScheme) var colorScheme
     
     let light: Image
     let dark: Image
 
-    @ViewBuilder var body: some View {
+    //MARK: - Body View
+    @ViewBuilder 
+    var body: some View {
         if colorScheme == .light {
             light
                 .resizable()

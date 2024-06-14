@@ -43,7 +43,7 @@ struct LocationAddViewController: View {
         }
     }
     
-    //MARK: - Separated Views
+    //MARK: - Computed properties and Functions as View
     private var searchSuggestion: some View {
         List(locationViewModel.locationResponse ?? []) { location in
             Button(action: {
@@ -104,7 +104,6 @@ struct LocationAddViewController: View {
     private var toolbarView: some View {
         Button(action: {
             presentationMode.wrappedValue.dismiss()
-            
         }) {
             Image(systemName: "chevron.left")
                 .foregroundColor(Color("black"))

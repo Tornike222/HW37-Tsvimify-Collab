@@ -9,12 +9,14 @@ import SwiftUI
 import SwiftData
 
 struct WeatherViewController: View {
+    //MARK: - Properties
     @StateObject var viewModel: WeatherViewModel
     @Environment(\.modelContext) private var context
     @Query private var locationsModel: [LocationsModel]
     @State var currentLocation: LocationsModel?
     @State private var titleWidth: CGFloat = 0
     
+    //MARK: - Body View
     var body: some View {
         NavigationStack {
                     VStack {
@@ -58,7 +60,6 @@ struct WeatherViewController: View {
                     )
                 }
         .onAppear(perform: {
-            
             if let tbilisiLocation = locationsModel.first(where: { $0.name == "Tbilisi" }) {
                 currentLocation = tbilisiLocation
             } else {
@@ -66,36 +67,31 @@ struct WeatherViewController: View {
                 context.insert(newTbilisi)
                 currentLocation = newTbilisi
             }
-            viewModel.fetchWeather(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
-            viewModel.fetchWeekForecast(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
-            viewModel.fetchHourlyWeather(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
+            viewModel.weatherInfoFetcher(lat: currentLocation!.latitude, lon: currentLocation!.longitude)
         })
     }
     
-    var citiesMenu: some View {
+    //MARK: - Computed properties and Functions as View
+    private var citiesMenu: some View {
         Menu {
             ForEach(locationsModel) { location in
                 Button(location.name, action: {
-                    viewModel.fetchWeather(lat: location.latitude, lon: location.latitude)
-                    viewModel.fetchWeekForecast(lat: location.latitude, lon: location.latitude)
-                    viewModel.fetchHourlyWeather(lat: location.latitude, lon: location.latitude)
+                    viewModel.weatherInfoFetcher(lat: location.latitude, lon: location.latitude)
                     currentLocation = location
                 })
             }
             
             NavigationLink {
                 LocationAddViewController(locationViewModel: LocationAddViewModel())
-                    .navigationBarTitle("Locations" , displayMode: .inline)
-                
             } label: {
                 Text("Add New Location")
                 
                 Image("navigate")
             }
-            
         } label: {
             HStack{
                 Spacer()
+                
                 glassMorphic(width: titleWidth + 125, height: 36)
                     .background(GeometryReader { geometry in
                         Color.clear.onAppear {
@@ -104,7 +100,6 @@ struct WeatherViewController: View {
                     })
                     .offset(x: 20)
             }
-            
             .overlay {
                 HStack{
                     Spacer()
@@ -142,7 +137,7 @@ struct WeatherViewController: View {
             .shadow(radius: 10)
     }
     
-    func glassMorphic(width: CGFloat ,height: CGFloat) -> some View {
+    private func glassMorphic(width: CGFloat ,height: CGFloat) -> some View {
         ZStack {
             TransparentBlurView(effect: .systemUltraThinMaterialLight) { view in
                 
@@ -153,7 +148,7 @@ struct WeatherViewController: View {
         .opacity(0.8)
     }
     
-    func introStatsView(weatherResponse: WeatherResponse) -> some View {
+    private func introStatsView(weatherResponse: CurrentWeatherModel) -> some View {
         HStack {
             statChipView(iconName: "rainy", value: "\(Int(viewModel.weekForecastResponse?.daily.first?.rain?.rainPercentage ?? 0 ) * 100 > 100 ? 100 : Int(viewModel.weekForecastResponse?.daily.first?.rain?.rainPercentage ?? 0))%    ")
             
@@ -169,7 +164,7 @@ struct WeatherViewController: View {
         }
     }
     
-    func weatherInfoView(weatherResponse: WeatherResponse) -> some View {
+    private func weatherInfoView(weatherResponse: CurrentWeatherModel) -> some View {
         VStack(spacing: -5) {
             
             Text("\(String(format: "%.1f", weatherResponse.main.temp - 273.15))°")
@@ -201,7 +196,7 @@ struct WeatherViewController: View {
         .foregroundStyle(.white)
     }
     
-    func statChipView(iconName: String, value: String) -> some View {
+    private func statChipView(iconName: String, value: String) -> some View {
         HStack(alignment: .center, spacing: 1) {
             Image(iconName)
                 .resizable()
@@ -266,10 +261,10 @@ struct WeatherViewController: View {
                                 RoundedRectangle(cornerRadius: 20)
                                     .stroke(lineWidth: 1)
                                     .foregroundStyle(Color.white)
-                                TodaysRow(hourlyForecast: hourlyForecast)
+                                TodaysRowView(hourlyForecast: hourlyForecast)
                             }
                     } else {
-                        TodaysRow(hourlyForecast: hourlyForecast)
+                        TodaysRowView(hourlyForecast: hourlyForecast)
                     }
                 }
             })
@@ -287,10 +282,10 @@ struct WeatherViewController: View {
                         .overlay {
                             RoundedRectangle(cornerRadius: 20)
                                 .stroke(lineWidth: 1)
-                            TodaysRow(hourlyForecast: hourlyForecast)
+                            TodaysRowView(hourlyForecast: hourlyForecast)
                         }
                 } else {
-                    TodaysRow(hourlyForecast: hourlyForecast)
+                    TodaysRowView(hourlyForecast: hourlyForecast)
                 }
             }
         }
@@ -300,20 +295,19 @@ struct WeatherViewController: View {
     private func chooseBackground() -> some View {
         switch viewModel.weatherResponse?.weather[0].main {
         case "Rain":
-            RainyAndSnowyBackground(sksFileName: "RainFall.sks", backgroundColorTop: .rainyTop, backgroundColorBottom: .rainyBottom)
+            RainyAndSnowyBackgroundView(sksFileName: "RainFall.sks", backgroundColorTop: .rainyTop, backgroundColorBottom: .rainyBottom)
         case "Snow":
-            RainyAndSnowyBackground(sksFileName: "SnowFall.sks", backgroundColorTop: .snowyTop, backgroundColorBottom: .snowyBottom)
+            RainyAndSnowyBackgroundView(sksFileName: "SnowFall.sks", backgroundColorTop: .snowyTop, backgroundColorBottom: .snowyBottom)
         case "Clear":
-            WarmBackground(backgroundColorTop: .sunnyTop, backgroundColorBottom: .sunnyBottom)
+            WarmBackgroundView(backgroundColorTop: .sunnyTop, backgroundColorBottom: .sunnyBottom)
         case "Clouds":
-            CloudyBackground(backgroundColorTop: .cloudyTop, backgroundColorBottom: .cloudyBottom)
+            CloudyBackgroundView(backgroundColorTop: .cloudyTop, backgroundColorBottom: .cloudyBottom)
         default :
             EmptyView()
         }
     }
     
-    // MARK: - Weekly weather forecast
-    var weekForecastView: some View {
+    private var weekForecastView: some View {
         VStack(spacing: 0) {
             ForEach(viewModel.sortedWeekData(), id: \.dt) { day in
                 HStack {
@@ -371,21 +365,6 @@ struct WeatherViewController: View {
             Text("\(Int(temp))")
             Image("celsius")
                 .padding(EdgeInsets(.init(top: 3, leading: -4, bottom: 0, trailing: 0)))
-        }
-    }
-}
-
-struct TransparentBlurView: UIViewRepresentable {
-    var effect: UIBlurEffect.Style
-    var onChange: (UIVisualEffectView) -> ()
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        UIVisualEffectView(effect: UIBlurEffect(style: effect))
-    }
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        DispatchQueue.main.async {
-            onChange(uiView)
         }
     }
 }

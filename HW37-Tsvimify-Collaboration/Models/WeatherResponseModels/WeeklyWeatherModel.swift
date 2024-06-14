@@ -1,5 +1,5 @@
 //
-//  WeekForecastModel.swift
+//  WeeklyWeatherModel.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by Irinka Datoshvili on 13.06.24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeekForecastResponse: Decodable {
+struct WeeklyWeatherModel: Decodable {
     let daily: [DailyWeather]
 }
 

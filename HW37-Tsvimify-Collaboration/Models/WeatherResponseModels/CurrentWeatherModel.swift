@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherResponse: Decodable {
+struct CurrentWeatherModel: Decodable {
     let weather: [Weather]
     let main: Main
     let wind: Wind

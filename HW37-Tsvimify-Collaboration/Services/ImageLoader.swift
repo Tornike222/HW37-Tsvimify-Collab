@@ -7,17 +7,21 @@
 
 import SwiftUI
 
+//MARK: - ImageLoader
 class ImageLoader: ObservableObject {
+    //MARK: - Properties
     let url: URL?
     
     @Published var image: UIImage? = nil
     @Published var errorMessage: String? = nil
     @Published var isLoading: Bool = false
     
+    //MARK: - Initialization
     init(url: URL?) {
         self.url = url
     }
     
+    //MARK: - Fetch Function
     func fetchImage() {
         
         guard image == nil else { return }

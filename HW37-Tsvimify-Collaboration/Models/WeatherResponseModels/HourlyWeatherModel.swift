@@ -1,5 +1,5 @@
 //
-//  HourlyWeatherResponseModel.swift
+//  HourlyWeatherModel.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by Temur Chitashvili on 13.06.24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HourlyWeatherResponse: Decodable {
+struct HourlyWeatherModel: Decodable {
     let lat: Double
     let lon: Double
     let hourly: [HourlyForecast]

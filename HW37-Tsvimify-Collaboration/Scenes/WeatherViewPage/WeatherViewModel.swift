@@ -10,28 +10,34 @@ import SwiftData
 import NetworkPackage
 
 class WeatherViewModel: ObservableObject {
+    //MARK: - Properties
     @Published var locationResponseModel: LocationsModel?
-    @Published var weatherResponse: WeatherResponse?
+    @Published var weatherResponse: CurrentWeatherModel?
     @Published var errorMessage: String?
-    @Published var weekForecastResponse: WeekForecastResponse?
-    @Published var hourlyWeatherResponse: HourlyWeatherResponse?
+    @Published var weekForecastResponse: WeeklyWeatherModel?
+    @Published var hourlyWeatherResponse: HourlyWeatherModel?
 
-    // MARK: Computed Property
-       var filterTodaysWeather: [HourlyForecast]? {
-           guard let hourlyWeather = hourlyWeatherResponse else {
-               return nil
-           }
-           if let index = hourlyWeather.hourly.firstIndex(where: { $0.dt.getTimeStringFromUTC() == "23:00" }) {
-               return Array(hourlyWeather.hourly.prefix(through: index))
-           } else {
-               return nil
-           }
-       }
+    var filterTodaysWeather: [HourlyForecast]? {
+        guard let hourlyWeather = hourlyWeatherResponse else {
+            return nil
+        }
+        if let index = hourlyWeather.hourly.firstIndex(where: { $0.dt.getTimeStringFromUTC() == "23:00" }) {
+            return Array(hourlyWeather.hourly.prefix(through: index))
+        } else {
+            return nil
+        }
+    }
+    
+    func weatherInfoFetcher(lat: Double, lon: Double) {
+        fetchWeather(lat: lat, lon: lon)
+        fetchWeekForecast(lat: lat, lon: lon)
+        fetchHourlyWeather(lat: lat, lon: lon)
+    }
 
     func fetchWeather(lat: Double, lon: Double) {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=159e264bbb707514e8ea1734c14e4169"
         
-        NetworkService().requestData(urlString: urlString) { (response: WeatherResponse?, error: Error?) in
+        NetworkService().requestData(urlString: urlString) { (response: CurrentWeatherModel?, error: Error?) in
             if let error = error {
                 self.errorMessage = error.localizedDescription
                 return
@@ -48,7 +54,7 @@ class WeatherViewModel: ObservableObject {
     func fetchWeekForecast(lat: Double, lon: Double) {
         let urlString = "https://openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&units=metric&appid=439d4b804bc8187953eb36d2a8c26a02"
         
-        NetworkService().requestData(urlString: urlString) { (response: WeekForecastResponse?, error: Error?) in
+        NetworkService().requestData(urlString: urlString) { (response: WeeklyWeatherModel?, error: Error?) in
             if let error = error {
                 self.errorMessage = error.localizedDescription
                 return
@@ -64,7 +70,7 @@ class WeatherViewModel: ObservableObject {
     
     func fetchHourlyWeather(lat: Double, lon: Double) {
         let urlString = "https://openweathermap.org/data/2.5/onecall?lat=\(lat)&lon=\(lon)&units=metric&appid=439d4b804bc8187953eb36d2a8c26a02"
-        NetworkService().requestData(urlString: urlString) { (response: HourlyWeatherResponse?, error: Error?) in
+        NetworkService().requestData(urlString: urlString) { (response: HourlyWeatherModel?, error: Error?) in
             if let error = error {
                 self.errorMessage = error.localizedDescription
                 return
@@ -77,14 +83,6 @@ class WeatherViewModel: ObservableObject {
             }
         }
     }
-
-    
-//    func dayOfWeek(from timestamp: Int) -> String {
-//        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "EEEE"
-//        return dateFormatter.string(from: date)
-//    }
     
     func sortedWeekData() -> [DailyWeather] {
         guard let data = weekForecastResponse?.daily else { return [] }
