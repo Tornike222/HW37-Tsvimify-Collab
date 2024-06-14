@@ -34,7 +34,9 @@ struct WarmBackgroundView: View {
             )
         )
         .onAppear {
-            animateBirds = true
+            if colorScheme == .light {
+                animateBirds = true
+            }
         }
         .onChange(of: colorScheme) {
             animateBirds.toggle()
