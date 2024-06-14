@@ -35,7 +35,6 @@ class LocationsViewModel: ObservableObject {
             let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(location.latitude)&lon=\(location.longitude)&appid=159e264bbb707514e8ea1734c14e4169"
             
             NetworkService().requestData(urlString: urlString) { (result: CurrentWeatherModel?, error: Error?) in
-
                 if let result = result {
                     self.locations?[index].weatherName = result.weather.first?.main
                     self.locations?[index].weatherCelsiusDegree = result.main.temp
