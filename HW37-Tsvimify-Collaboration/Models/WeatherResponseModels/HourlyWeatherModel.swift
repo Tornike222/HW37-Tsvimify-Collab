@@ -7,13 +7,7 @@
 
 import Foundation
 
-struct HourlyWeatherModel: Decodable {
-    let lat: Double
-    let lon: Double
-    let hourly: [HourlyForecast]
-}
-
-struct HourlyForecast: Decodable, Identifiable {
+struct HourlyWeatherModel: Decodable, Identifiable {
     let dt: Double
     let temp: Double
     let weather: [WeatherInformation]

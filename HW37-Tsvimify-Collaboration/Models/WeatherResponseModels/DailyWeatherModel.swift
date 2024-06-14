@@ -7,11 +7,7 @@
 
 import Foundation
 
-struct WeeklyWeatherModel: Decodable {
-    let daily: [DailyWeather]
-}
-
-struct DailyWeather: Decodable {
+struct DailyWeatherModel: Decodable {
     let dt: Int
     let temp: Temperature
     let weather: [WeatherInfo]

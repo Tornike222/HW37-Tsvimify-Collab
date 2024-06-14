@@ -95,7 +95,7 @@ struct LocationAddViewController: View {
                 .frame(width: 5)
         }
         .padding(20)
-        .background(LinearGradient(gradient: Gradient(colors: [Color("blue"), Color("lightBlue")]), startPoint: .top, endPoint: .bottom))
+        .background(LinearGradient(gradient: Gradient(colors: [Color("customBlue"), Color("customLightBlue")]), startPoint: .top, endPoint: .bottom))
         .cornerRadius(16)
         .shadow(radius: 5)
         .listRowSeparator(.hidden)
@@ -106,7 +106,7 @@ struct LocationAddViewController: View {
             presentationMode.wrappedValue.dismiss()
         }) {
             Image(systemName: "chevron.left")
-                .foregroundColor(Color("black"))
+                .foregroundColor(Color("customBlack"))
         }
     }
 }

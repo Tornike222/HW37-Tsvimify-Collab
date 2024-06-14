@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TodaysRowView: View {
     //MARK: - Properties
-    let hourlyForecast: HourlyForecast
+    let hourlyForecast: HourlyWeatherModel
     
     //MARK: - Body View
     var body: some View {

@@ -21,6 +21,7 @@ struct WeatherViewController: View {
         NavigationStack {
                     VStack {
                         citiesMenu
+                        
                         ScrollView {
                             VStack {
                                 if let weatherResponse = viewModel.weatherResponse {
@@ -150,7 +151,7 @@ struct WeatherViewController: View {
     
     private func introStatsView(weatherResponse: CurrentWeatherModel) -> some View {
         HStack {
-            statChipView(iconName: "rainy", value: "\(Int(viewModel.weekForecastResponse?.daily.first?.rain?.rainPercentage ?? 0 ) * 100 > 100 ? 100 : Int(viewModel.weekForecastResponse?.daily.first?.rain?.rainPercentage ?? 0))%    ")
+            statChipView(iconName: "rainy", value: "\(viewModel.getRainyPercentage())%    ")
             
             Spacer()
                 .frame(width: 35)
@@ -245,7 +246,7 @@ struct WeatherViewController: View {
             
             Spacer()
             
-            Text((viewModel.hourlyWeatherResponse?.hourly[0].dt.getDateStringFromUTC() ?? ""))
+            Text((viewModel.summarizedWeatherResponse?.hourly[0].dt.getDateStringFromUTC() ?? ""))
                 .font(.system(size: 18,weight: .regular))
                 .foregroundStyle(Color.white)
         }
@@ -348,7 +349,7 @@ struct WeatherViewController: View {
     @ViewBuilder
     private func weatherIcon(image: String?) -> some View {
         if let iconName = image {
-            AsyncImage(url: URL(string: "https://openweathermap.org/img/wn/\(iconName)@2x.png")) { image in
+            AsyncImage(url: viewModel.getImageUrl(imageName: iconName)) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -363,6 +364,7 @@ struct WeatherViewController: View {
     private func ShowTemperature(temp: Double) -> some View {
         HStack(alignment: .top) {
             Text("\(Int(temp))")
+            
             Image("celsius")
                 .padding(EdgeInsets(.init(top: 3, leading: -4, bottom: 0, trailing: 0)))
         }
