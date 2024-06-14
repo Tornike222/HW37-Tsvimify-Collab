@@ -1,5 +1,5 @@
 //
-//  LocationAddViewModel.swift
+//  LocationsViewModel.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by telkanishvili on 12.06.24.
@@ -8,7 +8,7 @@
 import Foundation
 import NetworkPackage
 
-class LocationAddViewModel: ObservableObject {
+class LocationsViewModel: ObservableObject {
     //MARK: - Published vars
     @Published var locationResponse: [LocationsModel]?
     @Published var weatherResponse: [CurrentWeatherModel]?

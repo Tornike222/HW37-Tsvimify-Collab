@@ -1,5 +1,5 @@
 //
-//  WeatherViewController.swift
+//  WeatherPageView.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by telkanishvili on 12.06.24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct WeatherViewController: View {
+struct WeatherPageView: View {
     //MARK: - Properties
     @StateObject var viewModel: WeatherViewModel
     @Environment(\.modelContext) private var context
@@ -83,7 +83,7 @@ struct WeatherViewController: View {
             }
             
             NavigationLink {
-                LocationAddViewController(locationViewModel: LocationAddViewModel())
+                LocationsPageView(locationViewModel: LocationsViewModel())
             } label: {
                 Text("Add New Location")
                 

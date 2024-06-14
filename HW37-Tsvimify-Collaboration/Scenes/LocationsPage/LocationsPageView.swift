@@ -1,5 +1,5 @@
 //
-//  LocationAddViewController.swift
+//  LocationsPageView.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by telkanishvili on 12.06.24.
@@ -8,9 +8,9 @@
 import SwiftUI
 import SwiftData
 
-struct LocationAddViewController: View {
+struct LocationsPageView: View {
     //MARK: - Properties
-    @StateObject var locationViewModel: LocationAddViewModel
+    @StateObject var locationViewModel: LocationsViewModel
     @Query private var locations: [LocationsModel]
     @Environment(\.modelContext) private var context
     @Environment(\.presentationMode) var presentationMode

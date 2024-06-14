@@ -11,7 +11,7 @@ import SwiftUI
 struct HW37_Tsvimify_CollaborationApp: App {
     var body: some Scene {
         WindowGroup {
-            WeatherViewController(viewModel: WeatherViewModel())
+            WeatherPageView(viewModel: WeatherViewModel())
         }
         .modelContainer(for: LocationsModel.self)
 
