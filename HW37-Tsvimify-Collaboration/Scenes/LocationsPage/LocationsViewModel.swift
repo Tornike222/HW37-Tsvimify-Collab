@@ -1,5 +1,5 @@
 //
-//  LocationAddViewModel.swift
+//  LocationsViewModel.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by telkanishvili on 12.06.24.
@@ -8,10 +8,10 @@
 import Foundation
 import NetworkPackage
 
-class LocationAddViewModel: ObservableObject {
+class LocationsViewModel: ObservableObject {
     //MARK: - Published vars
     @Published var locationResponse: [LocationsModel]?
-    @Published var weatherResponse: [WeatherResponse]?
+    @Published var weatherResponse: [CurrentWeatherModel]?
     @Published var locations: [LocationsModel]?
     @Published var searchText = ""
     
@@ -34,8 +34,7 @@ class LocationAddViewModel: ObservableObject {
             let location = locations[index]
             let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(location.latitude)&lon=\(location.longitude)&appid=159e264bbb707514e8ea1734c14e4169"
             
-            NetworkService().requestData(urlString: urlString) { (result: WeatherResponse?, error: Error?) in
-
+            NetworkService().requestData(urlString: urlString) { (result: CurrentWeatherModel?, error: Error?) in
                 if let result = result {
                     self.locations?[index].weatherName = result.weather.first?.main
                     self.locations?[index].weatherCelsiusDegree = result.main.temp

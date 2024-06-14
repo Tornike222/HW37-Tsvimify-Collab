@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct WeatherResponse: Decodable {
+struct CurrentWeatherModel: Decodable {
+    let coord: Coord
     let weather: [Weather]
     let main: Main
     let wind: Wind
@@ -43,4 +44,9 @@ struct Wind: Decodable {
 
 struct Clouds: Decodable {
     let all: Int
+}
+
+struct Coord: Decodable {
+    let lon: Double
+    let lat: Double
 }

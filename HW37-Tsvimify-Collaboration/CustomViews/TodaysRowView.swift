@@ -1,5 +1,5 @@
 //
-//  TodaysRow.swift
+//  TodaysRowView.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by Temur Chitashvili on 13.06.24.
@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct TodaysRow: View {
-    let hourlyForecast: HourlyForecast
+struct TodaysRowView: View {
+    //MARK: - Properties
+    let hourlyForecast: HourlyWeatherModel
     
+    //MARK: - Body View
     var body: some View {
         VStack {
             configureHourlyForecastText(with: String(Int(hourlyForecast.temp)) + "°C")
@@ -22,6 +24,7 @@ struct TodaysRow: View {
         .frame(width: 70, height: 155)
     }
     
+    //MARK: - Functions
     private func configureHourlyForecastText(with text: String) -> some View {
         Text(text)
             .font(.system(size: 18,weight: .regular))

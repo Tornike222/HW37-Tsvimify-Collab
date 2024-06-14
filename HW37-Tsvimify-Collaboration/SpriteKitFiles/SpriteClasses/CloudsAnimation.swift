@@ -8,11 +8,13 @@
 import SpriteKit
 
 class CloudsAnimation: SKScene {
+    //MARK: - Properties
     let anchorPointX: Int
     let anchorPointY: Int
     let sksFileName: String
     let particleColor: UIColor
     
+    //MARK: - Initialization
     init(anchorPointX: Int, anchorPointY: Int, sksFileName: String, particleColor: UIColor) {
         self.anchorPointX = anchorPointX
         self.anchorPointY = anchorPointY
@@ -25,20 +27,19 @@ class CloudsAnimation: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Lifecycle
     override func sceneDidLoad() {
         size = UIScreen.main.bounds.size
         scaleMode = .resizeFill
-
         anchorPoint = CGPoint(x: anchorPointX, y: anchorPointY)
-
         backgroundColor = .clear
 
-        let node = SKEmitterNode(fileNamed: sksFileName)!
-        node.particleColorSequence = nil
-        node.particleColorBlendFactor = 1.0
-        node.particleColor = particleColor
-        addChild(node)
-
-        node.particlePositionRange.dx = UIScreen.main.bounds.width
+        if let node = SKEmitterNode(fileNamed: sksFileName) {
+            node.particleColorSequence = nil
+            node.particleColorBlendFactor = 1.0
+            node.particleColor = particleColor
+            addChild(node)
+            node.particlePositionRange.dx = UIScreen.main.bounds.width
+        }
     }
 }

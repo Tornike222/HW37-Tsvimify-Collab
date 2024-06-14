@@ -1,5 +1,5 @@
 //
-//  MoonAndSunImages.swift
+//  MoonAndSunImagesView.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by Irinka Datoshvili on 12.06.24.
@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct MoonAndSunImages: View {
+struct MoonAndSunImagesView: View {
+    //MARK: - Body View
     var body: some View {
         VStack {
             HStack {
-                AdaptiveImage(light: Image(.sun), dark: Image(.moon))
+                AdaptiveImageView(light: Image(.sun), dark: Image(.moon))
                 
                 Spacer()
             }
