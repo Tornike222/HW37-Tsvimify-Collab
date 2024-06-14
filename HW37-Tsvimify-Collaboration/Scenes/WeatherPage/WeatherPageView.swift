@@ -77,7 +77,7 @@ struct WeatherPageView: View {
         Menu {
             ForEach(locationsModel) { location in
                 Button(location.name, action: {
-                    viewModel.weatherInfoFetcher(lat: location.latitude, lon: location.latitude)
+                    viewModel.weatherInfoFetcher(lat: location.latitude, lon: location.longitude)
                     currentLocation = location
                 })
             }
