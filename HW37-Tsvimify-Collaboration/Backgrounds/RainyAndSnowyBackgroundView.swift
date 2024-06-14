@@ -1,5 +1,5 @@
 //
-//  RainyAndSnowyBackground.swift
+//  RainyAndSnowyBackgroundView.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by Temur Chitashvili on 12.06.24.
@@ -8,13 +8,14 @@
 import SwiftUI
 import SpriteKit
 
-struct RainyAndSnowyBackground: View {
-    
+struct RainyAndSnowyBackgroundView: View {
+    //MARK: - Properties
     @Environment(\.colorScheme) var colorScheme
     let sksFileName: String
     let backgroundColorTop: Color
     let backgroundColorBottom: Color
     
+    //MARK: - Body View
     var body: some View {
         ZStack {
             animationViews
@@ -26,6 +27,7 @@ struct RainyAndSnowyBackground: View {
             LinearGradient(gradient: Gradient(colors: [backgroundColorTop, backgroundColorBottom]), startPoint: .top, endPoint: .bottom))
     }
     
+    //MARK: - View's as computed properties
     private var animationViews: some View {
         Group {
             rainAndSnowFall
@@ -51,6 +53,6 @@ struct RainyAndSnowyBackground: View {
     }
     
     private var moonAndSunImages: some View {
-        MoonAndSunImages()
+        MoonAndSunImagesView()
     }
 }

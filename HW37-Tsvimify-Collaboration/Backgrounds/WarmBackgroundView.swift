@@ -1,5 +1,5 @@
 //
-//  WarmBackground.swift
+//  WarmBackgroundView.swift
 //  HW37-Tsvimify-Collaboration
 //
 //  Created by Irinka Datoshvili on 12.06.24.
@@ -8,21 +8,22 @@
 import SpriteKit
 import SwiftUI
 
-struct WarmBackground: View {
-    
+struct WarmBackgroundView: View {
+    //MARK: - Properties
     @Environment(\.colorScheme) var colorScheme
     @State private var animateBirds = false
     let backgroundColorTop: Color
     let backgroundColorBottom: Color
     
+    //MARK: - Body View
     var body: some View {
         ZStack {
             if colorScheme == .light {
-                MoonAndSunImages()
+                MoonAndSunImagesView()
                     .overlay { animationViews }
             } else {
                 animationViews
-                    .overlay { MoonAndSunImages() }
+                    .overlay { MoonAndSunImagesView() }
             }
         }
         .background(
@@ -33,13 +34,15 @@ struct WarmBackground: View {
             )
         )
         .onAppear {
-            animateBirds = true
+            if colorScheme == .light {
+                animateBirds = true
+            }
         }
         .onChange(of: colorScheme) {
             animateBirds.toggle()
         }
     }
-    
+    //MARK: - View's as computed properties
     private var animationViews: some View {
         Group {
             if colorScheme == .dark {
@@ -55,6 +58,7 @@ struct WarmBackground: View {
             .ignoresSafeArea()
     }
     
+    //MARK: - View's as function
     private func birdsFlying() -> some View {
         let delays = [0.0, 0.4, 0.8]
         return GeometryReader { geometry in
